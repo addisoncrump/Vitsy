@@ -51,6 +51,7 @@ public class OperativeHandler {
 		case "/": return "divide";
 		case "M": return "modulo";
 		case "^": return "power";
+		case "F": return "factorial";
 		case "|": return "changedir";
 		case "<": return "goleft";
 		case ">": return "goright";

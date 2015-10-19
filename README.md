@@ -54,6 +54,8 @@ Vitsy comes from a common shortening for my alias, VTC, pronounced as a word.
     - Get the length of the stack and push it to the top of the stack.
  - repeatnextchar: \
     - Repeat the next operation as many times as the truncated top item of the stack.
+ - for loop: \[ (relative to direction, if moving leftward, use [\)
+    - Repeat the operations encapsulated in the [] for the number of times specified by the top value of the stack.
  - reverse: r
     - Reverse the stack.
  - rotateright: }
