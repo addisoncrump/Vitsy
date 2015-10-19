@@ -235,6 +235,9 @@ public class Vitsy {
 			stack.set(stack.size()-2,stack.get(stack.size()-1)/(stack.get(stack.size()-2)));
 			stack.remove(stack.size()-1);
 			break;
+		case "equal":
+			stack.set(stack.size()-1, (double) ((stack.get(stack.size()-2)==stack.get(stack.size()-1))? 0: 1));
+			break;
 		case "modulo":
 			stack.set(stack.size()-2,stack.get(stack.size()-1)%stack.get(stack.size()-2));
 			stack.remove(stack.size()-1);

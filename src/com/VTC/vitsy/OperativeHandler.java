@@ -51,6 +51,7 @@ public class OperativeHandler {
 		case "-": return "subtract";
 		case "*": return "multiply";
 		case "/": return "divide";
+		case "=": return "equal";
 		case "M": return "modulo";
 		case "^": return "power";
 		case "F": return "factorial";

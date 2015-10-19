@@ -76,6 +76,9 @@ Vitsy comes from a common shortening for my alias, VTC, pronounced as a word.
     - Multiply the top two items of the stack.
  - divide: /
     - Divide the top item of the stack by the second-to-top item of the stack.
+ - equal: =
+    - If the top two items of the stack are equal, chop off the top item of the stack and replace it with a zero.
+    - If they are not equal, chop off the top item of the stack and replace it with a 1.
  - modulo: M
     - Modulo the top item of the stack by the second-to-top item of the stack.
  - power: ^
