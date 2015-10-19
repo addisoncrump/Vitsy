@@ -9,6 +9,8 @@ It executes lengthwise with an instruction pointer.
 Vitsy comes from a common shortening for my alias, VTC, pronounced as a word.
 
 ### Basic Syntax
+ - wait: w
+    - wait the top item of stack in seconds.
  - ifnot: )
     - if the top item of the stack, post integer truncation, is not zero, do the next operation. Otherwise, skip it.
  - if: (
@@ -22,10 +24,16 @@ Vitsy comes from a common shortening for my alias, VTC, pronounced as a word.
     - If the top item of the stack is not zero, return to the beginning of the loop.
  - sine: S
     - Use the top value of the stack as input for a sine function, replacing said top value (in radians).
+ - asine: s
+    - Use the top value of the stack as input for an asine function, replacing said top value (in radians).
  - cosine: C
     - Use the top value of the stack as input for a cosine function, replacing said top value (in radians).
+ - acosine: A
+    - Use the top value of the stack as input for an acosine function, replacing said top value (in radians).
  - tangent: T
     - Use the top value of the stack as input for a tangent function, replacing said top value (in radians).
+ - atangent: a
+    - Use the top value of the stack as input for an atangent function, replacing said top value (in radians).
  - pi: P
     - Push a decimal approximation of pi to the top of the stack.
  - e: E
@@ -42,6 +50,10 @@ Vitsy comes from a common shortening for my alias, VTC, pronounced as a word.
     - End execution.
  - teleport: #
     - Teleport to the 1-D coordinates of the top item of the stack.
+ - length: l
+    - Get the length of the stack and push it to the top of the stack.
+ - repeatnextchar: \
+    - Repeat the next operation as many times as the truncated top item of the stack.
  - reverse: r
     - Reverse the stack.
  - rotateright: }

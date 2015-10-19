@@ -26,8 +26,13 @@ public class OperativeHandler {
 		case "!": return "skip";
 		case "[": return "loop";
 		case "S": return "sine";
+		case "s": return "asine";
 		case "C": return "cosine";
+		case "A": return "acosine";
 		case "T": return "tangent";
+		case "t": return "atangent";
+		case "\\": return "repnextchar";
+		case "l": return "length";
 		case "P": return "pi";
 		case "E": return "E";
 		case "L": return "log";
