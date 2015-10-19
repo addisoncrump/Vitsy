@@ -6,11 +6,23 @@ public class Vitsy {
 	private static int position = 0;
 	@SuppressWarnings("all")
 	private static ArrayList<Double> stack = new ArrayList(0);
+	@SuppressWarnings("all")
+	private static ArrayList<String> input = new ArrayList(0);
 	private static String[] instruct = null;
 	public static void main(String[] args) throws InterruptedException {
 		if (args.length == 0) {
 			System.err.println("Need a file pointer.");
 			return;
+		}
+		if (args.length > 1) {
+			String arrin = args[1];
+			for (int i = 2; i < args.length; i++) {
+				arrin += " "+args[i];
+			}
+			String[] arrinput = arrin.split("");
+			for (int i = 0; i < arrinput.length; i++) {
+				if (arrinput[i]!="") input.add(arrinput[i]);
+			}
 		}
 		instruct = FileHandler.getFileInstruct(args[0]);
 		while (OperativeHandler.operating()) {
@@ -99,6 +111,16 @@ public class Vitsy {
 			break;
 		case "0":
 			stack.add(new Double(0));
+			break;
+		case "input":
+			if (input.size() == 0) stack.add((double) -1);
+			else {
+				stack.add((double) ((int) input.get(input.size()-1).toCharArray()[0]));
+				input.remove(input.size()-1);
+			}
+			break;
+		case "inlength":
+			stack.add((double)input.size());
 			break;
 		case "wait":
 			Thread.sleep((long) (stack.get(stack.size()-1)*1000));

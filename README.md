@@ -9,6 +9,10 @@ It executes lengthwise with an instruction pointer.
 Vitsy comes from a common shortening for my alias, VTC, pronounced as a word.
 
 ### Basic Syntax
+ - input: i
+    - push the top item of the input stack as an integer to the program stack
+ - input length: I
+    - push the length of the input stack to the top of the program stack
  - wait: w
     - wait the top item of stack in seconds.
  - ifnot: )

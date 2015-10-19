@@ -20,6 +20,8 @@ public class OperativeHandler {
 		case "e": return "e";
 		case "f": return "f";
 		case "0": return "0";
+		case "i": return "input";
+		case "I": return "inlength";
 		case "w": return "wait";
 		case ")": return "ifnot";
 		case "(": return "if";
