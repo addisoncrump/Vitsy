@@ -103,17 +103,18 @@ public class Vitsy {
 				stack.remove(stack.size()-1);
 				break;
 			case "outnum":
-				System.out.println(stack.get(stack.size()-1));
+				System.out.print(stack.get(stack.size()-1));
 				stack.remove(stack.size()-1);
 				break;
 			case "rand":
 				stack.set(stack.size()-1, (Math.random()*stack.get(stack.size()-1)));
 				break;
 			case "outchar":
-				System.out.println((char) stack.get(stack.size()-1).intValue());
+				System.out.print((char) stack.get(stack.size()-1).intValue());
 				stack.remove(stack.size()-1);
 				break;
 			case "end":
+				System.out.println();
 				System.exit(0);
 			case "teleport":
 				position = stack.get(stack.size()-1).intValue()-2;
@@ -170,7 +171,7 @@ public class Vitsy {
 			case "quote":
 				while (true) {
 					position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
-					if (instruct[position].equals('"')) break;
+					if (instruct[position].equals("\"")) break;
 					stack.add(((double)instruct[position].toCharArray()[0]));
 				}
 				break;
@@ -190,6 +191,7 @@ public class Vitsy {
 				break;
 			case "err":
 				System.err.println("Unknown character: "+instruct[position]);
+				System.out.println();
 				System.exit(2);
 			}
 			position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
@@ -286,18 +288,20 @@ public class Vitsy {
 				stack.remove(stack.size()-1);
 				break;
 			case "outnum":
-				System.out.println(stack.get(stack.size()-1));
+				System.out.print(stack.get(stack.size()-1));
 				stack.remove(stack.size()-1);
 				break;
 			case "rand":
 				stack.set(stack.size()-1, (Math.random()*stack.get(stack.size()-1)));
 				break;
 			case "outchar":
-				System.out.println((char) stack.get(stack.size()-1).intValue());
+				System.out.print((char) stack.get(stack.size()-1).intValue());
 				stack.remove(stack.size()-1);
 				break;
 			case "end":
+				System.out.println();
 				System.exit(0);
+				break;
 			case "teleport":
 				position = stack.get(stack.size()-1).intValue();
 				stack.remove(stack.size()-1);
@@ -353,7 +357,7 @@ public class Vitsy {
 			case "quote":
 				while (true) {
 					position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
-					if (instruct[position].equals('"')) break;
+					if (instruct[position].equals("\"")) break;
 					stack.add(((double)instruct[position].toCharArray()[0]));
 				}
 				break;
@@ -373,6 +377,7 @@ public class Vitsy {
 				break;
 			case "err":
 				System.err.println("Unknown character: "+instruct[position]);
+				System.out.println();
 				System.exit(2);
 			}
 			position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
