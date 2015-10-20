@@ -177,7 +177,15 @@ public class Vitsy {
 			stack.remove(stack.size()-1);
 			break;
 		case "outnum":
-			System.out.printf("%f", stack.get(stack.size()-1));
+			Double x = stack.get(stack.size()-1);
+			if (x > 10000 && x.intValue() == x)
+				System.out.printf("%f", x.intValue());
+			else if (x > 10000) 
+				System.out.printf("%f", x);
+			else if (x.intValue() == x) 
+				System.out.print(x.intValue());
+			else
+				System.out.print(x);
 			stack.remove(stack.size()-1);
 			break;
 		case "rand":
@@ -223,7 +231,7 @@ public class Vitsy {
 			stack.remove(stack.size()-1);
 			break;
 		case "subtract":
-			stack.set(stack.size()-2,stack.get(stack.size()-1)-(stack.get(stack.size()-2)));
+			stack.set(stack.size()-2,stack.get(stack.size()-2)-(stack.get(stack.size()-1)));
 			stack.remove(stack.size()-1);
 			break;
 		case "multiply":
@@ -231,14 +239,14 @@ public class Vitsy {
 			stack.remove(stack.size()-1);
 			break;
 		case "divide":
-			stack.set(stack.size()-2,stack.get(stack.size()-1)/(stack.get(stack.size()-2)));
+			stack.set(stack.size()-2,stack.get(stack.size()-2)/(stack.get(stack.size()-1)));
 			stack.remove(stack.size()-1);
 			break;
 		case "equal":
 			stack.set(stack.size()-1, (double) ((stack.get(stack.size()-2)==stack.get(stack.size()-1))? 0: 1));
 			break;
 		case "modulo":
-			stack.set(stack.size()-2,stack.get(stack.size()-1)%stack.get(stack.size()-2));
+			stack.set(stack.size()-2,stack.get(stack.size()-2)%stack.get(stack.size()-1));
 			stack.remove(stack.size()-1);
 			break;
 		case "power":
@@ -248,14 +256,14 @@ public class Vitsy {
 		case "factorial":
 			// Approximating the Gamma function if x is NOT an int.
 			double output = 1;
-			Double x = stack.get(stack.size()-1);
-			if (x.intValue() == x) {
-				for (int i=1; i<=x; i++) {
+			Double y = stack.get(stack.size()-1);
+			if (y.intValue() == y) {
+				for (int i=1; i<=y; i++) {
 					output*=i;
 				}
 			}
 			else {
-				output = Math.exp(((x - 0.5) * Math.log(x + 4.5) - (x + 4.5))+(1.0 + 76.18009173/(x + 0) - 86.50532033/(x + 1) + 24.01409822/(x + 2) - 1.231739516/(x + 3) + 0.00120858003/(x + 4) - 0.00000536382/(x + 5)));
+				output = Math.exp(((y - 0.5) * Math.log(y + 4.5) - (y + 4.5))+(1.0 + 76.18009173/(y + 0) - 86.50532033/(y + 1) + 24.01409822/(y + 2) - 1.231739516/(y + 3) + 0.00120858003/(y + 4) - 0.00000536382/(y + 5)));
 			}
 			stack.set(stack.size()-1, output);
 			break;
