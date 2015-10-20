@@ -42,8 +42,8 @@ public class Vitsy {
 			for (int x = 0; x < reps; x++) {	
 				position = (direction) ? (startPos + 1)%instruct.length: startPos - 1;
 				while(!instruct[position].equals("]")) {
-					position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
 					opHandle();
+					position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
 				}
 			}
 		}
