@@ -42,8 +42,8 @@ public class Vitsy {
 			for (int x = 0; x < reps; x++) {	
 				position = (direction) ? (startPos + 1)%instruct.length: startPos - 1;
 				while(!instruct[position].equals("]")) {
-					opHandle();
 					position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
+					opHandle();
 				}
 			}
 		}
@@ -51,7 +51,6 @@ public class Vitsy {
 	public static void loopHandler() throws InterruptedException {
 		int startPos = position;
 		while (true) {
-			opHandle();
 			position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
 			if (instruct[position].equals("]")) {
 				if (stack.get(stack.size()-1).intValue() == 0) { 
@@ -60,6 +59,7 @@ public class Vitsy {
 				}
 				position = startPos+1;
 			}
+			opHandle();
 		}
 	}
 	public static void opHandle() throws InterruptedException {
@@ -138,7 +138,6 @@ public class Vitsy {
 			position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
 			break;
 		case "loop":
-			position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
 			loopHandler();
 			break;
 		case "sine":
