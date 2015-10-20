@@ -8,6 +8,9 @@ It executes lengthwise with an instruction pointer.
 ### Naming
 Vitsy comes from a common shortening for my alias, VTC, pronounced as a word.
 
+### Command Line Usage
+You can either write a program to a file and run it from said file with "java -jar Vitsy.jar <filename> [arg 1] [arg 2] ..." or directly from the command line with "java -jar Vitsy.jar --code '<program>' [arg 1] [arg 2] ..."'
+
 ### Basic Syntax
  - input: i
     - push the top item of the input stack as an integer to the program stack

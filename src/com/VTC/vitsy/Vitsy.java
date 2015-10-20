@@ -15,8 +15,10 @@ public class Vitsy {
 			return;
 		}
 		if (args.length > 1) {
+			int offset = 0;
 			String arrin = args[1];
-			for (int i = 2; i < args.length; i++) {
+			if (args[0].equals("--code")) offset = 2;
+			for (int i = 2+offset; i < args.length; i++) {
 				arrin += " "+args[i];
 			}
 			String[] arrinput = arrin.split("");
@@ -24,10 +26,11 @@ public class Vitsy {
 				if (arrinput[i]!="") input.add(arrinput[i]);
 			}
 		}
-		instruct = FileHandler.getFileInstruct(args[0]);
+		instruct = FileHandler.getFileInstruct(args);
 		while (OperativeHandler.operating()) {
 			position %= instruct.length;
-			opHandle();
+			if (!instruct[position].equals(""))
+				opHandle();
 			position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
 		}
 	}
