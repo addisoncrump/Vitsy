@@ -39,7 +39,7 @@ You can either write a program to a file and run it from said file with "java -j
     - Use the top value of the stack as input for an acosine function, replacing said top value (in radians).
  - tangent: T
     - Use the top value of the stack as input for a tangent function, replacing said top value (in radians).
- - atangent: a
+ - atangent: t
     - Use the top value of the stack as input for an atangent function, replacing said top value (in radians).
  - pi: P
     - Push a decimal approximation of pi to the top of the stack.
