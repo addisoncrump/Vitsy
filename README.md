@@ -10,6 +10,7 @@ Vitsy comes from a common shortening for my alias, VTC, pronounced as a word.
 
 ### Command Line Usage
 You can either write a program to a file and run it from said file with "java -jar Vitsy.jar <filename> [arg 1] [arg 2] ..." or directly from the command line with "java -jar Vitsy.jar --code '<program>' [arg 1] [arg 2] ..."'
+You can also add values directly to the program stack with "java -jar Vitsy.jar <filename | --code '<program>'> -v [num 1] [num 2] ..."
 
 ### Basic Syntax
  - input: i
