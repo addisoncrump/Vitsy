@@ -247,6 +247,7 @@ public class Vitsy {
 		case "globalvar":
 			if (globalvar == null) globalvar = stack.get(stack.size()-1);
 			else stack.add(globalvar);
+			break;
 		case "part":
 			stack.set(stack.size()-1, stack.get(stack.get(stack.size()-1).intValue()));
 			break;
