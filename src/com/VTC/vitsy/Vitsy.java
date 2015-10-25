@@ -236,6 +236,9 @@ public class Vitsy {
 		case "duplicate":
 			stack.add(stack.get(stack.size()-1));
 			break;
+		case "part":
+			stack.set(stack.get(stack.size()-1).intValue(), stack.get(stack.get(stack.size()-1).intValue()));
+			break;
 		case "add":
 			stack.set(stack.size()-2,stack.get(stack.size()-1)+(stack.get(stack.size()-2)));
 			stack.remove(stack.size()-1);

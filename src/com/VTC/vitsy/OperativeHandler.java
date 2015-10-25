@@ -47,6 +47,7 @@ public class OperativeHandler {
 		case "}": return "rotateright";
 		case "{": return "rotateleft";
 		case "D": return "duplicate";
+		case "p": return "part";
 		case "+": return "add";
 		case "-": return "subtract";
 		case "*": return "multiply";

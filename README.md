@@ -72,6 +72,8 @@ You can also add values directly to the program stack with "java -jar Vitsy.jar 
     - Rotate the stack to the left as the top item of the stack times.
  - duplicate: D
     - Duplicate the top item of the stack.
+ - part: p
+    - Get the top value of the stack's integer value and get its value's index, replacing the top value of the stack with said index.'
  - add: +
     - Add the top two items of the stack.
  - subtract: -
