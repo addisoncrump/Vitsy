@@ -31,7 +31,6 @@ public class Vitsy {
 				if (!arrinput[i].equals("") && !value) input.add(arrinput[i]);
 				else if (!arrinput[i].equals("")) stack.add(Double.parseDouble(arrinput[i]));
 			}
-			Collections.reverse(stack);
 		}
 		instruct = FileHandler.getFileInstruct(args);
 		while (OperativeHandler.operating()) {
@@ -237,7 +236,7 @@ public class Vitsy {
 			stack.add(stack.get(stack.size()-1));
 			break;
 		case "part":
-			stack.set(stack.get(stack.size()-1).intValue(), stack.get(stack.get(stack.size()-1).intValue()));
+			stack.set(stack.size()-1, stack.get(stack.get(stack.size()-1).intValue()));
 			break;
 		case "add":
 			stack.set(stack.size()-2,stack.get(stack.size()-1)+(stack.get(stack.size()-2)));
