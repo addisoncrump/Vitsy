@@ -48,6 +48,8 @@ public class OperativeHandler {
 		case "{": return "rotateleft";
 		case "D": return "duplicate";
 		case "p": return "part";
+		case "v": return "tempvar";
+		case "V": return "globalvar";
 		case "+": return "add";
 		case "-": return "subtract";
 		case "*": return "multiply";

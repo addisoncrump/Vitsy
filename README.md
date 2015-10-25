@@ -73,7 +73,11 @@ You can also add values directly to the program stack with "java -jar Vitsy.jar 
  - duplicate: D
     - Duplicate the top item of the stack.
  - part: p
-    - Get the top value of the stack's integer value and get its value's index, replacing the top value of the stack with said index.'
+    - Get the top value of the stack's integer value and get its value's index, replacing the top value of the stack with said index.
+ - tempvar: v
+    - If there is no value in tempvar, set the top item of the stack to it. Otherwise, push the tempvar value to the stack and clear the value of tempvar.
+ - globalvar: V
+    - If there is no value in globalvar, set the top item of the stack to it. Otherwise, push the globalvar value to the stack.
  - add: +
     - Add the top two items of the stack.
  - subtract: -

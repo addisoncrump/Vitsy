@@ -9,6 +9,8 @@ public class Vitsy {
 	@SuppressWarnings("all")
 	private static ArrayList<String> input = new ArrayList(0);
 	private static String[] instruct = null;
+	private static Double tempvar = null;
+	private static Double globalvar = null;
 	public static void main(String[] args) throws InterruptedException {
 		if (args.length == 0) {
 			System.err.println("Need a file pointer.");
@@ -235,6 +237,16 @@ public class Vitsy {
 		case "duplicate":
 			stack.add(stack.get(stack.size()-1));
 			break;
+		case "tempvar":
+			if (tempvar == null) tempvar = stack.get(stack.size()-1);
+			else {
+				stack.add(tempvar);
+				tempvar = null;
+			}
+			break;
+		case "globalvar":
+			if (globalvar == null) globalvar = stack.get(stack.size()-1);
+			else stack.add(globalvar);
 		case "part":
 			stack.set(stack.size()-1, stack.get(stack.get(stack.size()-1).intValue()));
 			break;
