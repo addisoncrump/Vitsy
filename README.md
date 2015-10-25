@@ -60,9 +60,9 @@ You can also add values directly to the program stack with "java -jar Vitsy.jar 
     - Teleport to the 1-D coordinates of the top item of the stack.
  - length: l
     - Get the length of the stack and push it to the top of the stack.
- - repeatnextchar: \
+ - repeatnextchar: \\
     - Repeat the next operation as many times as the truncated top item of the stack.
- - for loop: \[ (relative to direction, if moving leftward, use [\)
+ - for loop: \\[ (relative to direction, if moving leftward, use [\)
     - Repeat the operations encapsulated in the [] for the number of times specified by the top value of the stack.
  - reverse: r
     - Reverse the stack.
