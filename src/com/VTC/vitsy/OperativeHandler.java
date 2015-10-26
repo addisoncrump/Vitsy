@@ -63,7 +63,7 @@ public class OperativeHandler {
 		case ">": return "goright";
 		case "x": return "randdir";
 		case " ": return "nothing";
-		case "\"": return "quote";
+		case "\'": case "\"": return "quote";
 		}
 		return "err";
 	}

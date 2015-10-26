@@ -21,8 +21,10 @@ You can also add values directly to the program stack with "java -jar Vitsy.jar 
     - wait the top item of stack in seconds.
  - ifnot: )
     - if the top item of the stack, post integer truncation, is not zero, do the next operation. Otherwise, skip it.
+    - If an ifnot statement is found before a [, it will execute all information in [] if and only if the top item is not zero. 
  - if: (
     - if the top item of the stack, post integer truncation, is equal to zero, do the next operation. Otherwise, skip it.
+    - If an if statement is found before a [, it will execute all information in [] if and only if the top item is zero. 
  - skip: !
     - skip the next operation.
  - loop: [
@@ -103,8 +105,8 @@ You can also add values directly to the program stack with "java -jar Vitsy.jar 
     - Turn the instruction pointer to a randomly selected left or right.
  - nothing:  
     - Space is a NOP.
- - quote: "
-    - Double quotes begin to parse code as a string until encountering another quote.
+ - quote: " or '
+    - Double or single quotes begin to parse code as a string until encountering another quote.
  - err: anything else
     - Any heretofore undefined characters will cause an "Unknown Character: " error.
 

@@ -140,12 +140,44 @@ public class Vitsy {
 			stack.remove(stack.size()-1);
 			break;
 		case "ifnot":
-			if (stack.get(stack.size()-1).intValue() == 0) position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
-			stack.remove(stack.size()-1);
+			if (stack.get(stack.size()-1).intValue() == 0 && instruct[(direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1].equals("[")) {
+				stack.remove(stack.size()-1);
+				position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
+				position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
+				while (!instruct[position].equals("]")){
+					opHandle();
+					position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
+				}
+			} else if (stack.get(stack.size()-1).intValue() == 0) {
+				stack.remove(stack.size()-1);
+				position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
+			}
+			else if (instruct[(direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1].equals("[")) {
+				stack.remove(stack.size()-1);
+				while (!instruct[position].equals("]")) {
+					position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
+				}
+			} else stack.remove(stack.size()-1);
 			break;
 		case "if":
-			if (!(stack.get(stack.size()-1).intValue() == 0)) position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
-			stack.remove(stack.size()-1);
+			if (!(stack.get(stack.size()-1).intValue() == 0) && instruct[(direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1].equals("[")) {
+				stack.remove(stack.size()-1);
+				position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
+				position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
+				while (!instruct[position].equals("]")){
+					opHandle();
+					position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
+				}
+			} else if (!(stack.get(stack.size()-1).intValue() == 0)) {
+				stack.remove(stack.size()-1);
+				position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
+			}
+			else if (instruct[(direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1].equals("[")) {
+				stack.remove(stack.size()-1);
+				while (!instruct[position].equals("]")) {
+					position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
+				}
+			} else stack.remove(stack.size()-1);
 			break;
 		case "skip":
 			position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
@@ -230,7 +262,7 @@ public class Vitsy {
 			@SuppressWarnings("all")
 			ArrayList<Double> temp2 = new ArrayList(0);
 			for (int k = 0; k < stack.size(); k++) {
-				temp2.add(stack.get((k+1)%stack.size()));
+				temp2.add(stack.get((k-1 < 0) ? stack.size()-1: k-1));
 			}
 			stack = temp2;
 			break;
@@ -302,7 +334,7 @@ public class Vitsy {
 		case "quote":
 			while (true) {
 				position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
-				if (instruct[position].equals("\"")) break;
+				if (instruct[position].equals("\"") || instruct[position].equals("\'")) break;
 				stack.add(((double)instruct[position].toCharArray()[0]));
 			}
 			break;
