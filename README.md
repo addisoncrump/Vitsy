@@ -67,9 +67,9 @@ You can also add values directly to the program stack with "java -jar Vitsy.jar 
  - reverse: r
     - Reverse the stack.
  - rotateright: }
-    - Rotate the stack to the right as the top item of the stack times.
+    - Rotate the stack to the right once.
  - rotateleft: {
-    - Rotate the stack to the left as the top item of the stack times.
+    - Rotate the stack to the left once.
  - duplicate: D
     - Duplicate the top item of the stack.
  - part: p
