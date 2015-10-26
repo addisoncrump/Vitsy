@@ -24,14 +24,16 @@ public class Vitsy {
 				offset += 1;
 				value = true;
 			}
-			String arrin = args[1+offset];
-			for (int i = 2 + offset; i < args.length; i++) {
-				arrin += " "+args[i];
-			}
-			String[] arrinput = (!value) ? arrin.split(""): arrin.split(" ");
-			for (int i = 0; i < arrinput.length; i++) {
-				if (!arrinput[i].equals("") && !value) input.add(arrinput[i]);
-				else if (!arrinput[i].equals("")) stack.add(Double.parseDouble(arrinput[i]));
+			if (args.length > offset+1) {
+				String arrin = args[1+offset];
+				for (int i = 2 + offset; i < args.length; i++) {
+					arrin += " "+args[i];
+				}
+				String[] arrinput = (!value) ? arrin.split(""): arrin.split(" ");
+				for (int i = 0; i < arrinput.length; i++) {
+					if (!arrinput[i].equals("") && !value) input.add(arrinput[i]);
+					else if (!arrinput[i].equals("")) stack.add(Double.parseDouble(arrinput[i]));
+				}
 			}
 		}
 		instruct = FileHandler.getFileInstruct(args);
@@ -138,11 +140,11 @@ public class Vitsy {
 			stack.remove(stack.size()-1);
 			break;
 		case "ifnot":
-			if ((stack.get(stack.size()-1)).equals(0)) position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
+			if (stack.get(stack.size()-1).intValue() == 0) position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
 			stack.remove(stack.size()-1);
 			break;
 		case "if":
-			if (!(stack.get(stack.size()-1)).equals(0)) position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
+			if (!(stack.get(stack.size()-1).intValue() == 0)) position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
 			stack.remove(stack.size()-1);
 			break;
 		case "skip":
@@ -217,35 +219,39 @@ public class Vitsy {
 			Collections.reverse(stack);
 			break;
 		case "rotateright":
-			int looptimesr = stack.get(stack.size()-1).intValue();
-			stack.remove(stack.size()-1);
-			for (int k = 0; k < looptimesr; k++) {
-				stack.add(stack.get(stack.size()-1));
-				for (int i = stack.size()-2; i >= 0; i++) stack.set(i, stack.get((i!=0) ? i-1: stack.size()-1));
-				stack.remove(stack.size()-1);
+			@SuppressWarnings("all")
+			ArrayList<Double> temp1 = new ArrayList(0);
+			for (int k = 0; k < stack.size(); k++) {
+				temp1.add(stack.get((k+1)%stack.size()));
 			}
+			stack = temp1;
 			break;
 		case "rotateleft":
-			int looptimesl = stack.get(stack.size()-1).intValue();
-			stack.remove(stack.size()-1);
-			for (int k = 0; k < looptimesl; k++) {
-				stack.add(stack.get(0));
-				for (int i = 0; i < stack.size()-1; i++) stack.set(i, stack.get(i+1));
-				stack.remove(stack.size()-1);
+			@SuppressWarnings("all")
+			ArrayList<Double> temp2 = new ArrayList(0);
+			for (int k = 0; k < stack.size(); k++) {
+				temp2.add(stack.get((k+1)%stack.size()));
 			}
+			stack = temp2;
 			break;
 		case "duplicate":
 			stack.add(stack.get(stack.size()-1));
 			break;
 		case "tempvar":
-			if (tempvar == null) tempvar = stack.get(stack.size()-1);
+			if (tempvar == null) {
+				tempvar = stack.get(stack.size()-1);
+				stack.remove(stack.size()-1);
+			}
 			else {
 				stack.add(tempvar);
 				tempvar = null;
 			}
 			break;
 		case "globalvar":
-			if (globalvar == null) globalvar = stack.get(stack.size()-1);
+			if (globalvar == null) {
+				globalvar = stack.get(stack.size()-1);
+				stack.remove(stack.size()-1);
+			}
 			else stack.add(globalvar);
 			break;
 		case "part":
@@ -268,7 +274,8 @@ public class Vitsy {
 			stack.remove(stack.size()-1);
 			break;
 		case "equal":
-			stack.set(stack.size()-1, (double) ((stack.get(stack.size()-2)==stack.get(stack.size()-1))? 0: 1));
+			stack.set(stack.size()-2, (double) ((stack.get(stack.size()-2)==stack.get(stack.size()-1))? 0: 1));
+			stack.remove(stack.size()-1);
 			break;
 		case "modulo":
 			stack.set(stack.size()-2,stack.get(stack.size()-2)%stack.get(stack.size()-1));
