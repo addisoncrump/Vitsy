@@ -90,6 +90,8 @@ You can also add values directly to the program stack with "java -jar Vitsy.jar 
     - If there is no value in tempvar, set the top item of the stack to it. Otherwise, push the tempvar value to the stack and clear the value of tempvar.
  - globalvar: V
     - If there is no value in globalvar, set the top item of the stack to it. Otherwise, push the globalvar value to the stack.
+ - remove: X
+    - Remove the top item of the current stack.
  - add: +
     - Add the top two items of the stack.
  - subtract: -

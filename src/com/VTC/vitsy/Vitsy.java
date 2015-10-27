@@ -292,6 +292,9 @@ public class Vitsy {
 			}
 			else stac.get(currstac).add(globalvar);
 			break;
+		case "remove":
+			stac.get(currstac).remove(stac.get(currstac).size()-1);
+			break;
 		case "part":
 			stac.get(currstac).set(stac.get(currstac).size()-1, stac.get(currstac).get(stac.get(currstac).get(stac.get(currstac).size()-1).intValue()));
 			break;

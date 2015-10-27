@@ -55,6 +55,7 @@ public class OperativeHandler {
 		case "y": return "numstack";
 		case "v": return "tempvar";
 		case "V": return "globalvar";
+		case "X": return "remove";
 		case "+": return "add";
 		case "-": return "subtract";
 		case "*": return "multiply";
