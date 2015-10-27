@@ -344,16 +344,10 @@ public class Vitsy {
 			stac.get(currstac).remove(stac.get(currstac).size()-1);
 			break;
 		case "factorial":
-			// Approximating the Gamma function if x is NOT an int.
 			double output = 1;
 			Double y = stac.get(currstac).get(stac.get(currstac).size()-1);
-			if (y.intValue() == y) {
-				for (int i=1; i<=y; i++) {
-					output*=i;
-				}
-			}
-			else {
-				output = Math.exp(((y - 0.5) * Math.log(y + 4.5) - (y + 4.5))+(1.0 + 76.18009173/(y + 0) - 86.50532033/(y + 1) + 24.01409822/(y + 2) - 1.231739516/(y + 3) + 0.00120858003/(y + 4) - 0.00000536382/(y + 5)));
+			for (int i=1; i<=y; i++) {
+				output*=i;
 			}
 			stac.get(currstac).set(stac.get(currstac).size()-1, output);
 			break;
