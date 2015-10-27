@@ -76,6 +76,16 @@ You can also add values directly to the program stack with "java -jar Vitsy.jar 
     - Duplicate the top item of the stack.
  - part: p
     - Get the top value of the stack's integer value and get its value's index, replacing the top value of the stack with said index.
+ - changestack: ?
+    - Shift one stack to the right - note that this will wrap around, so the 2-dimensionality of the stacks are... finicky.
+ - clnstack: :
+    - Clone the current stack, creating a new one and pushing all of the contents of the current stack to it. You will shift to this stack after this operation.
+ - newstack: &
+    - Create an empty stack.
+ - rmstack: Y
+    - Remove the current stack. This will shift you one stack to the right (if it exists).
+ - numstack: y
+    - Get the current number of stacks.
  - tempvar: v
     - If there is no value in tempvar, set the top item of the stack to it. Otherwise, push the tempvar value to the stack and clear the value of tempvar.
  - globalvar: V

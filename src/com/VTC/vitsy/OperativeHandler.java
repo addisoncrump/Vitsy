@@ -48,6 +48,11 @@ public class OperativeHandler {
 		case "{": return "rotateleft";
 		case "D": return "duplicate";
 		case "p": return "part";
+		case "?": return "changestack";
+		case ":": return "clnstack";
+		case "&": return "newstack";
+		case "Y": return "rmstack";
+		case "y": return "numstack";
 		case "v": return "tempvar";
 		case "V": return "globalvar";
 		case "+": return "add";
