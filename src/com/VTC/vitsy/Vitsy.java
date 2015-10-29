@@ -12,6 +12,7 @@ public class Vitsy {
 	private static String[] instruct = null;
 	private static Double tempvar = null;
 	private static Double globalvar = null;
+	private static boolean looping = false;
 	@SuppressWarnings("all")
 	public static void main(String[] args) throws InterruptedException {
 		stac.add(new ArrayList(0));
@@ -41,13 +42,14 @@ public class Vitsy {
 		}
 		instruct = FileHandler.getFileInstruct(args);
 		while (OperativeHandler.operating()) {
-			position %= instruct.length;
+			if (!looping && position > instruct.length - 1) System.exit(0);
 			if (!instruct[position].equals(""))
 				opHandle();
-			position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
+			position = (direction) ? (position + 1): (position - 1 >= 0) ? position - 1: instruct.length-1;
 		}
 	}
 	public static void forLoopHandler(int reps) throws InterruptedException {
+		looping = true;
 		position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
 		if (!instruct[position].equals("[")) {
 			for (int x = 0; x < reps; x++) {
@@ -56,15 +58,17 @@ public class Vitsy {
 		} else {
 			int startPos = position;
 			for (int x = 0; x < reps; x++) {	
-				position = (direction) ? (startPos + 1)%instruct.length: startPos - 1;
+				position = (direction) ? (startPos + 1)%instruct.length: (!(startPos - 1 < 0)) ? startPos - 1: instruct.length-1;
 				while(!instruct[position].equals("]")) {
 					opHandle();
 					position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
 				}
 			}
 		}
+		looping = false;
 	}
 	public static void loopHandler() throws InterruptedException {
+		looping = true;
 		int startPos = position;
 		while (true) {
 			position = (direction) ? (position + 1)%instruct.length: (position - 1 >= 0) ? position - 1: instruct.length-1;
@@ -77,6 +81,7 @@ public class Vitsy {
 			}
 			opHandle();
 		}
+		looping = false;
 	}
 	@SuppressWarnings("all")
 	public static void opHandle() throws InterruptedException {
@@ -245,7 +250,6 @@ public class Vitsy {
 			stac.get(currstac).remove(stac.get(currstac).size()-1);
 			break;
 		case "end":
-			System.out.println();
 			System.exit(0);
 		case "teleport":
 			position = stac.get(currstac).get(stac.get(currstac).size()-1).intValue()-2;
@@ -372,10 +376,6 @@ public class Vitsy {
 			break;
 		case "nothing":
 			break;
-		case "err":
-			System.err.println("Unknown character: "+instruct[position]);
-			System.out.println();
-			System.exit(2);
 		}
 	}
 }

@@ -71,7 +71,7 @@ public class OperativeHandler {
 		case " ": return "nothing";
 		case "\'": case "\"": return "quote";
 		}
-		return "err";
+		return "nothing";
 	}
 	public static boolean operating() {
 		return operating;

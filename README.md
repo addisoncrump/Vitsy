@@ -12,6 +12,11 @@ Vitsy comes from a common shortening for my alias, VTC, pronounced as a word.
 You can either write a program to a file and run it from said file with "java -jar Vitsy.jar <filename> [arg 1] [arg 2] ..." or directly from the command line with "java -jar Vitsy.jar --code '<program>' [arg 1] [arg 2] ..."'
 You can also add values directly to the program stack with "java -jar Vitsy.jar <filename | --code '<program>'> -v [num 1] [num 2] ..."
 
+### Wrap Nature
+A program will only loop given that
+    - The last character on the line is a skip.
+    - The program is currently in either type of loop.
+
 ### Basic Syntax
  - input: i
     - push the top item of the input stack as an integer to the program stack
@@ -30,7 +35,7 @@ You can also add values directly to the program stack with "java -jar Vitsy.jar 
  - loop: [
     - begin a loop.
  - end loop: ]
-    - End a loop only if the top item of the stack is zero. If this is called ouside of a loop it will throw an "Unknown Character: ]" error.
+    - End a loop only if the top item of the stack is zero. If this is called ouside of a loop it is treated as a NOP.
     - If the top item of the stack is not zero, return to the beginning of the loop.
  - sine: S
     - Use the top value of the stack as input for a sine function, replacing said top value (in radians).
@@ -119,8 +124,6 @@ You can also add values directly to the program stack with "java -jar Vitsy.jar 
     - Space is a NOP.
  - quote: " or '
     - Double or single quotes begin to parse code as a string until encountering another quote.
- - err: anything else
-    - Any heretofore undefined characters will cause an "Unknown Character: " error.
 
 ### Future Updates
 I plan to include indexing of a stack (picking a specific item), removing approximations of complex numbers (and making them symbolic), and any more suggested changes.

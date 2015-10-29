@@ -11,10 +11,11 @@ public class FileHandler {
 				System.err.println("File not found, exiting...");
 				System.exit(1);
 			}
-		} else {
+		} else if (filename.length > 1) {
 			file = filename[1].split("");
+		} else {
+			file = ";".split("");
 		}
 		return file;
-
 	}
 }
