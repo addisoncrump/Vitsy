@@ -14,8 +14,10 @@ You can also add values directly to the program stack with "java -jar Vitsy.jar 
 
 ### Wrap Nature
 A program will only loop given that
-    - The last character on the line is a skip.
-    - The program is currently in either type of loop.
+
+- The last character on the line is a skip.
+- The program is currently in either type of loop.
+- It is capturing a string.
 
 ### Basic Syntax
  - input: i
