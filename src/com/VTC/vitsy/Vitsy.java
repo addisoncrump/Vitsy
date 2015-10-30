@@ -251,6 +251,13 @@ public class Vitsy {
 			break;
 		case "end":
 			System.exit(0);
+		case "getallprintall":
+			int reps = input.size();
+			for(int i = 0; i < reps; i++) {
+				System.out.print(input.get(0));
+				input.remove(0);
+			}
+			break;
 		case "teleport":
 			position = stac.get(currstac).get(stac.get(currstac).size()-1).intValue()-2;
 			stac.get(currstac).remove(stac.get(currstac).size()-1);
@@ -336,7 +343,7 @@ public class Vitsy {
 			stac.get(currstac).remove(stac.get(currstac).size()-1);
 			break;
 		case "equal":
-			stac.get(currstac).set(stac.get(currstac).size()-2, (double) ((stac.get(currstac).get(stac.get(currstac).size()-2)==stac.get(currstac).get(stac.get(currstac).size()-1))? 0: 1));
+			stac.get(currstac).set(stac.get(currstac).size()-2, (double) ((stac.get(currstac).get(stac.get(currstac).size()-2).equals(stac.get(currstac).get(stac.get(currstac).size()-1)))? 0: 1));
 			stac.get(currstac).remove(stac.get(currstac).size()-1);
 			break;
 		case "modulo":
