@@ -65,8 +65,10 @@ A program will only loop given that
     - Get a random number between 0 and the top item of the stack.
  - end: ;
     - End execution.
- - getallprintall: Z
-    - Get all input and output it to STDOUT.
+ - printall: Z
+    - Print out the entire current stack as characters. Equivalent to 'l\O'
+ - getall: z
+    - Get all the input of the input stack and push it to the stack. Equivalent to 'I\i'
  - teleport: #
     - Teleport to the 1-D coordinates of the top item of the stack.
  - length: l

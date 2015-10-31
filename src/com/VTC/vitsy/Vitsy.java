@@ -35,7 +35,7 @@ public class Vitsy {
 				}
 				String[] arrinput = (!value) ? arrin.split(""): arrin.split(" ");
 				for (int i = 0; i < arrinput.length; i++) {
-					if (!arrinput[i].equals("") && !value) input.add(arrinput[i]);
+					if (!value) input.add(arrinput[i]);
 					else if (!arrinput[i].equals("")) stac.get(currstac).add(Double.parseDouble(arrinput[i]));
 				}
 			}
@@ -251,11 +251,18 @@ public class Vitsy {
 			break;
 		case "end":
 			System.exit(0);
-		case "getallprintall":
-			int reps = input.size();
-			for(int i = 0; i < reps; i++) {
-				System.out.print(input.get(0));
-				input.remove(0);
+		case "printall":
+			int reps = stac.get(currstac).size();
+			for(int i = reps - 1; i >= 0; i--) {
+				System.out.print((char) stac.get(currstac).get(stac.get(currstac).size()-1).intValue());
+				stac.get(currstac).remove(stac.get(currstac).size()-1);
+			}
+			break;
+		case "getall":
+			int reps2 = input.size();
+			for(int i = reps2 - 1; i >= 0; i--) {
+				stac.get(currstac).add((double) ((int) input.get(input.size()-1).toCharArray()[0]));
+				input.remove(input.size()-1);
 			}
 			break;
 		case "teleport":

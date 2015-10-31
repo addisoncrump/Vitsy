@@ -42,7 +42,8 @@ public class OperativeHandler {
 		case "O": return "outchar";
 		case "R": return "rand";
 		case ";": return "end";
-		case "Z": return "getallprintall";
+		case "Z": return "printall";
+		case "z": return "getall";
 		case "#": return "teleport";
 		case "r": return "reverse";
 		case "}": return "rotateright";
