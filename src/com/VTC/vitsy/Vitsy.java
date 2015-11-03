@@ -33,9 +33,14 @@ public class Vitsy {
 				for (int i = 2 + offset; i < args.length; i++) {
 					arrin += " "+args[i];
 				}
+				try {
+					Integer.parseInt(args[offset]);
+				} catch (Exception e) {
+					value = true;
+				}
 				String[] arrinput = (!value) ? arrin.split(""): arrin.split(" ");
 				for (int i = 0; i < arrinput.length; i++) {
-					if (!value) input.add(arrinput[i]);
+					if (value) input.add(arrinput[i]);
 					else if (!arrinput[i].equals("")) stac.get(currstac).add(Double.parseDouble(arrinput[i]));
 				}
 			}
