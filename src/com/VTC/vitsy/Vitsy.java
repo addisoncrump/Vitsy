@@ -38,7 +38,7 @@ public class Vitsy {
 				} catch (Exception e) {
 					value = true;
 				}
-				String[] arrinput = (!value) ? arrin.split(""): arrin.split(" ");
+				String[] arrinput = (value) ? arrin.split(""): arrin.split(" ");
 				for (int i = 0; i < arrinput.length; i++) {
 					if (value) input.add(arrinput[i]);
 					else if (!arrinput[i].equals("")) stac.get(currstac).add(Double.parseDouble(arrinput[i]));
