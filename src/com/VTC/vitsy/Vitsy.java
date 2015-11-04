@@ -21,27 +21,23 @@ public class Vitsy {
 			return;
 		}
 		if (args.length > 1) {
-			boolean value = false;
+			boolean cansplit = true;
 			int offset = 0;
 			if (args[0].equals("--code")) offset += 1;
-			if (args.length > 2 && args[2].equals("-v")) {
-				offset += 1;
-				value = true;
-			}
 			if (args.length > offset+1) {
 				String arrin = args[1+offset];
 				for (int i = 2 + offset; i < args.length; i++) {
 					arrin += " "+args[i];
 				}
 				try {
-					Integer.parseInt(args[offset]);
+					Integer.parseInt(args[1+offset]);
 				} catch (Exception e) {
-					value = true;
+					cansplit = false;
 				}
-				String[] arrinput = (value) ? arrin.split(""): arrin.split(" ");
+				String[] arrinput = (cansplit) ? arrin.split(" "): arrin.split("");
 				for (int i = 0; i < arrinput.length; i++) {
-					if (value) input.add(arrinput[i]);
-					else if (!arrinput[i].equals("")) stac.get(currstac).add(Double.parseDouble(arrinput[i]));
+					if (cansplit) stac.get(currstac).add(Double.parseDouble(arrinput[i]));
+					else input.add(arrinput[i]);
 				}
 			}
 		}
@@ -380,6 +376,19 @@ public class Vitsy {
 				if (instruct[position].equals("\"") || instruct[position].equals("\'")) break;
 				stac.get(currstac).add(((double)instruct[position].toCharArray()[0]));
 			}
+			break;
+		case "prime":
+			Double n = stac.get(currstac).get(stac.get(currstac).size()-1);
+			stac.get(currstac).remove(stac.get(currstac).size()-1);
+			int outputp = 1;
+			if(n < 2) outputp = 0;
+			else if(n == 2 || n == 3) outputp = 1;
+			else if(n%2 == 0 || n%3 == 0) outputp = 0;
+			long sqrtN = (long)Math.sqrt(n)+1;
+			for(long i = 6L; i <= sqrtN; i += 6) {
+				if(n%(i-1) == 0 || n%(i+1) == 0) outputp = 0;
+			}
+			stac.get(currstac).add(new Double(outputp));
 			break;
 		case "changedir":
 			direction = !direction;

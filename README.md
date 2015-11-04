@@ -85,7 +85,7 @@ A program will only loop given that
     - Rotate the stack to the left once.
  - duplicate: D
     - Duplicate the top item of the stack.
- - part: p
+ - part: @
     - Get the top value of the stack's integer value and get its value's index, replacing the top value of the stack with said index.
  - changestack: ?
     - Shift one stack to the right - note that this will wrap around, so the 2-dimensionality of the stacks are... finicky.
@@ -118,6 +118,8 @@ A program will only loop given that
     - Modulo the top item of the stack by the second-to-top item of the stack.
  - power: ^
     - Put the second-to-top item of the stack to the power of the top item of the stack.
+ - prime: p
+    - If the top item of the stack is prime, push 1. Otherwise, push 0.
  - changedir: |
     - Reverse the direction of the instruction pointer.
  - go left: <

@@ -49,7 +49,7 @@ public class OperativeHandler {
 		case "}": return "rotateright";
 		case "{": return "rotateleft";
 		case "D": return "duplicate";
-		case "p": return "part";
+		case "@": return "part";
 		case "?": return "changestack";
 		case ":": return "clnstack";
 		case "&": return "newstack";
@@ -66,6 +66,7 @@ public class OperativeHandler {
 		case "M": return "modulo";
 		case "^": return "power";
 		case "F": return "factorial";
+		case "p": return "prime";
 		case "|": return "changedir";
 		case "<": return "goleft";
 		case ">": return "goright";
