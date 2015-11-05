@@ -120,6 +120,10 @@ A program will only loop given that
     - Put the second-to-top item of the stack to the power of the top item of the stack.
  - prime: p
     - If the top item of the stack is prime, push 1. Otherwise, push 0.
+ - method: m
+    - Go to the line in the source code file as defined by the truncated top item of the stack.
+ - file: \`
+    - Pop the entire current stack as a string and open the file with that string name, pushing its contents to the stack.
  - changedir: |
     - Reverse the direction of the instruction pointer.
  - go left: <

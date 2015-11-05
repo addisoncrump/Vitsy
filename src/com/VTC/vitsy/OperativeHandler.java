@@ -67,6 +67,8 @@ public class OperativeHandler {
 		case "^": return "power";
 		case "F": return "factorial";
 		case "p": return "prime";
+		case "m": return "method";
+		case "`": return "file";
 		case "|": return "changedir";
 		case "<": return "goleft";
 		case ">": return "goright";
