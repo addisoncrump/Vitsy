@@ -11,6 +11,7 @@ Vitsy comes from a common shortening for my alias, VTC, pronounced as a word.
 ### Command Line Usage
 You can either write a program to a file and run it from said file with "java -jar Vitsy.jar <filename> [arg 1] [arg 2] ..." or directly from the command line with "java -jar Vitsy.jar --code '<program>' [arg 1] [arg 2] ..."'
 You can force values to be parsed as string input with "java -jar Vitsy.jar <filename | --code '<program>'> -v [num 1] [num 2] ..."
+Note that an empty program will print out the lyrics to 99 bottles of beer. c:
 
 ### Wrap Nature
 A program will only loop given that
