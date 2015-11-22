@@ -123,6 +123,10 @@ A program will only loop given that
     - If the top item of the stack is prime, push 1. Otherwise, push 0.
  - method: m
     - Go to the line in the source code file as defined by the truncated top item of the stack.
+ - object: o
+    - Push the current stack to an object referenced by the following character and remove it from the program stack. This will not override commands.
+    - Once the aforementioned character is in the instruction pointer again, it will push the object's stack to the program stack.
+    - Any character that is instantiated will draw the program's stack again if it has no object stack.'
  - file: \`
     - Pop the entire current stack as a string and open the file with that string name, pushing its contents to the stack.
  - changedir: |
@@ -134,7 +138,7 @@ A program will only loop given that
  - randdir: x
     - Turn the instruction pointer to a randomly selected left or right.
  - nothing:  
-    - Space is a NOP.
+    - Anything undefined is a NOP.
  - quote: " or '
     - Double or single quotes begin to parse code as a string until encountering another quote.
 
