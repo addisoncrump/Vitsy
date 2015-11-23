@@ -42,7 +42,8 @@ public class Vitsy {
 					arrin += " "+args[i];
 				}
 				try {
-					Integer.parseInt(args[1+offset]);
+					for (int i = 1+offset; i < args.length; i++)
+						Double.parseDouble(args[i]);
 				} catch (Exception e) {
 					cansplit = false;
 				}
