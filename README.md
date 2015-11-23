@@ -8,6 +8,9 @@ It executes lengthwise with an instruction pointer.
 ### Naming
 Vitsy comes from a common shortening for my alias, VTC, pronounced as a word.
 
+### VitsySafe
+This jar file exists for servers with online interpreters. It is the 'safe mode' jar.
+
 ### Command Line Usage
 You can either write a program to a file and run it from said file with "java -jar Vitsy.jar <filename> [arg 1] [arg 2] ..." or directly from the command line with "java -jar Vitsy.jar --code '<program>' [arg 1] [arg 2] ..."'
 You can force values to be parsed as string input with "java -jar Vitsy.jar <filename | --code '<program>'> -v [num 1] [num 2] ..."
