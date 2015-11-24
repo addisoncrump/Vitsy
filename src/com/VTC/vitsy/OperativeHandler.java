@@ -69,8 +69,8 @@ public class OperativeHandler {
 		case "p": return "prime";
 		case "m": return "method";
 		case "o": return "objects";
-		// case "k": return "classmethod";
-		// case "K": return "super";
+		case "k": return "classmethod";
+		case "K": return "super";
 		case "`": return "file";
 		case "|": return "changedir";
 		case "<": return "goleft";

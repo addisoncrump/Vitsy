@@ -2,30 +2,43 @@ package com.VTC.vitsy;
 import java.io.*;
 import java.util.*;
 
+@SuppressWarnings("all")
 public class Vitsy {
-
 	private static boolean direction = true;
+
 	private static int position = 0;
-	@SuppressWarnings("all")
+
 	private static ArrayList<ArrayList<Double>> stac = new ArrayList(0);
-	@SuppressWarnings("all")
+
 	private static ArrayList<Integer[]> oldpos = new ArrayList(0);
+
 	private static int currstac = 0;
-	@SuppressWarnings("all")
+
 	private static ArrayList<String> input = new ArrayList(0);
-	private static ArrayList<String[]> instruct = null;
-	@SuppressWarnings("all")
+
+	private static ArrayList<ArrayList<String[]>> instruct = new ArrayList(0);
+
 	private static ArrayList<ArrayList<Double>> objects = new ArrayList(0);
-	@SuppressWarnings("all")
+
 	private static ArrayList<String> objectrefs = new ArrayList(0);
-	@SuppressWarnings("all")
+
 	private static ArrayList<String> objectrefsold = new ArrayList(0);
+
+	private static ArrayList<Integer[]> oldposext = new ArrayList(0);
+
+	private static ArrayList<String> extender = new ArrayList(0);
+
+	private static ArrayList<String[]> users = new ArrayList(0);
+
 	private static int currinstruct = 0;
+
 	private static Double tempvar = null;
+
 	private static Double globalvar = null;
+
 	private static boolean looping = false;
 
-	@SuppressWarnings("all")
+
 	public static void main(String[] args) throws InterruptedException, IOException {
 		stac.add(new ArrayList(0));
 		if (args.length == 0) {
@@ -54,44 +67,77 @@ public class Vitsy {
 				}
 			}
 		}
-		instruct = FileHandler.getFileInstruct(args);
+		if (!args[0].equals("--code")) {
+			try {
+				extender.add(FileHandler.getFileInstruct(args, new boolean[]{false, true}).get(0)[0]);
+				users.add(FileHandler.getFileInstruct(args, new boolean[]{true, false}).get(0));
+			} catch (Exception e) {}
+		}
+		instruct.add(FileHandler.getFileInstruct(args, new boolean[]{false, false}));
 		while (OperativeHandler.operating()) {
-			if (!looping && position > instruct.get(currinstruct).length - 1 && oldpos.size()==0) System.exit(0);
-			else if (position < instruct.get(currinstruct).length && !instruct.get(currinstruct)[position].equals(""))
+			if (!looping && position > instruct.get(instruct.size()-1).get(currinstruct).length - 1 && oldpos.size()==0) System.exit(0);
+			else if (position < instruct.get(instruct.size()-1).get(currinstruct).length && !instruct.get(instruct.size()-1).get(currinstruct)[position].equals(""))
 				opHandle();
-			position = (direction) ? (position + 1): (position - 1 >= 0) ? position - 1: instruct.get(currinstruct).length-1;
+			position = (direction) ? (position + 1): (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
 		}
 	}
 
-	public static void methodHandler() throws InterruptedException, IOException {
-		while (position < instruct.get(currinstruct).length) {
-			if (!looping && position > instruct.get(currinstruct).length - 1) {
+	public static void methodHandler(int source) throws InterruptedException, IOException {
+		ArrayList<String[]> methodFromOtherSource = new ArrayList(0);
+		if (source == -1) {
+			oldpos.add(new Integer[]{currinstruct,position});
+			currinstruct = stac.get(currstac).get(stac.get(currstac).size()-1).intValue();
+			position = 0;
+			stac.get(currstac).remove(stac.get(currstac).size()-1);
+			while (position < instruct.get(instruct.size()-1).get(currinstruct).length) {
+				if (!looping && position > instruct.get(instruct.size()-1).get(currinstruct).length - 1) {
+					break;
+				}
+				else if (!instruct.get(instruct.size()-1).get(currinstruct)[position].equals(""))
+					opHandle();
+				position = (direction) ? (position + 1): (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
+			}
+			currinstruct = oldpos.get(oldpos.size()-1)[0].intValue();
+			position = oldpos.get(oldpos.size()-1)[1].intValue();
+			oldpos.remove(oldpos.size()-1);
+			return;
+		}
+		instruct.add(FileHandler.getFileInstruct(new String[]{(source == -2)?extender.get(extender.size()-1):users.get(users.size()-1)[source]}, new boolean[]{false, false}));
+		users.add(FileHandler.getFileInstruct(new String[]{(source == -2)?extender.get(extender.size()-1):users.get(users.size()-1)[source]}, new boolean[]{true, false}).get(0));
+		extender.add(FileHandler.getFileInstruct(new String[]{(source == -2)?extender.get(extender.size()-1):users.get(users.size()-1)[source]}, new boolean[]{false, true}).get(0)[0]);
+		oldposext.add(new Integer[]{currinstruct, position});
+		currinstruct = (source == -2)?currinstruct:stac.get(currstac).get(stac.get(currstac).size()-1).intValue();
+		position = 0;
+		if (source != -2) stac.get(currstac).remove(stac.get(currstac).size()-1);
+		while (position < instruct.get(instruct.size()-1).get(currinstruct).length) {
+			if (!looping && position > instruct.get(instruct.size()-1).get(currinstruct).length - 1) {
 				break;
 			}
-			else if (!instruct.get(currinstruct)[position].equals(""))
+			else if (!instruct.get(instruct.size()-1).get(currinstruct)[position].equals(""))
 				opHandle();
-			position = (direction) ? (position + 1): (position - 1 >= 0) ? position - 1: instruct.get(currinstruct).length-1;
+			position = (direction) ? (position + 1): (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
 		}
-		currinstruct = oldpos.get(oldpos.size()-1)[0].intValue();
-		position = oldpos.get(oldpos.size()-1)[1].intValue();
-		oldpos.remove(oldpos.size()-1);
+		instruct.remove(instruct.size()-1);
+		currinstruct = oldposext.get(oldposext.size()-1)[0].intValue();
+		position = oldposext.get(oldposext.size()-1)[1].intValue();
+		oldposext.remove(oldposext.size()-1);
 	}
 
 	public static void forLoopHandler(int reps) throws InterruptedException, IOException {
 		looping = true;
-		position = (direction) ? (position + 1)%instruct.get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(currinstruct).length-1;
+		position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
 
-		if (!instruct.get(currinstruct)[position].equals("[")) {
+		if (!instruct.get(instruct.size()-1).get(currinstruct)[position].equals("[")) {
 			for (int x = 0; x < reps; x++) {
 				opHandle();
 			}
 		} else {
 			int startPos = position;
 			for (int x = 0; x < reps; x++) {	
-				position = (direction) ? (startPos + 1)%instruct.get(currinstruct).length: (!(startPos - 1 < 0)) ? startPos - 1: instruct.get(currinstruct).length-1;
-				while(!instruct.get(currinstruct)[position].equals("]")) {
+				position = (direction) ? (startPos + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (!(startPos - 1 < 0)) ? startPos - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
+				while(!instruct.get(instruct.size()-1).get(currinstruct)[position].equals("]")) {
 					opHandle();
-					position = (direction) ? (position + 1)%instruct.get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(currinstruct).length-1;
+					position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
 				}
 			}
 		}
@@ -103,8 +149,8 @@ public class Vitsy {
 		int startPos = position;
 
 		while (true) {
-			position = (direction) ? (position + 1)%instruct.get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(currinstruct).length-1;
-			if (instruct.get(currinstruct)[position].equals("]")) {
+			position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
+			if (instruct.get(instruct.size()-1).get(currinstruct)[position].equals("]")) {
 				if (stac.get(currstac).get(stac.get(currstac).size()-1).intValue() == 0) { 
 					stac.get(currstac).remove(stac.get(currstac).size()-1);
 					break;
@@ -117,9 +163,9 @@ public class Vitsy {
 		looping = false;
 	}
 
-	@SuppressWarnings("all")
+
 	public static void opHandle() throws InterruptedException, IOException {
-		switch (OperativeHandler.doOperation((String) instruct.get(currinstruct)[position])) {
+		switch (OperativeHandler.doOperation((String) instruct.get(instruct.size()-1).get(currinstruct)[position])) {
 		case "1":
 			stac.get(currstac).add(new Double(1));
 			break;
@@ -202,11 +248,7 @@ public class Vitsy {
 			break;
 
 		case "method":
-			oldpos.add(new Integer[]{currinstruct,position});
-			currinstruct = stac.get(currstac).get(stac.get(currstac).size()-1).intValue();
-			position = 0;
-			stac.get(currstac).remove(stac.get(currstac).size()-1);
-			methodHandler();
+			methodHandler(-1);
 			break;
 
 		case "file":
@@ -229,49 +271,49 @@ public class Vitsy {
 			break;
 
 		case "ifnot":
-			if (stac.get(currstac).get(stac.get(currstac).size()-1).intValue() == 0 && instruct.get(currinstruct)[(direction) ? (position + 1)%instruct.get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(currinstruct).length-1].equals("[")) {
+			if (stac.get(currstac).get(stac.get(currstac).size()-1).intValue() == 0 && instruct.get(instruct.size()-1).get(currinstruct)[(direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1].equals("[")) {
 				stac.get(currstac).remove(stac.get(currstac).size()-1);
-				position = (direction) ? (position + 1)%instruct.get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(currinstruct).length-1;
-				position = (direction) ? (position + 1)%instruct.get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(currinstruct).length-1;
-				while (!instruct.get(currinstruct)[position].equals("]")){
+				position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
+				position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
+				while (!instruct.get(instruct.size()-1).get(currinstruct)[position].equals("]")){
 					opHandle();
-					position = (direction) ? (position + 1)%instruct.get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(currinstruct).length-1;
+					position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
 				}
 			} else if (stac.get(currstac).get(stac.get(currstac).size()-1).intValue() == 0) {
 				stac.get(currstac).remove(stac.get(currstac).size()-1);
-				position = (direction) ? (position + 1)%instruct.get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(currinstruct).length-1;
+				position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
 			}
-			else if (instruct.get(currinstruct)[(direction) ? (position + 1)%instruct.get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(currinstruct).length-1].equals("[")) {
+			else if (instruct.get(instruct.size()-1).get(currinstruct)[(direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1].equals("[")) {
 				stac.get(currstac).remove(stac.get(currstac).size()-1);
-				while (!instruct.get(currinstruct)[position].equals("]")) {
-					position = (direction) ? (position + 1)%instruct.get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(currinstruct).length-1;
+				while (!instruct.get(instruct.size()-1).get(currinstruct)[position].equals("]")) {
+					position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
 				}
 			} else stac.get(currstac).remove(stac.get(currstac).size()-1);
 			break;
 
 		case "if":
-			if (!(stac.get(currstac).get(stac.get(currstac).size()-1).intValue() == 0) && instruct.get(currinstruct)[(direction) ? (position + 1)%instruct.get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(currinstruct).length-1].equals("[")) {
+			if (!(stac.get(currstac).get(stac.get(currstac).size()-1).intValue() == 0) && instruct.get(instruct.size()-1).get(currinstruct)[(direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1].equals("[")) {
 				stac.get(currstac).remove(stac.get(currstac).size()-1);
-				position = (direction) ? (position + 1)%instruct.get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(currinstruct).length-1;
-				position = (direction) ? (position + 1)%instruct.get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(currinstruct).length-1;
-				while (!instruct.get(currinstruct)[position].equals("]")){
+				position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
+				position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
+				while (!instruct.get(instruct.size()-1).get(currinstruct)[position].equals("]")){
 					opHandle();
-					position = (direction) ? (position + 1)%instruct.get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(currinstruct).length-1;
+					position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
 				}
 			} else if (!(stac.get(currstac).get(stac.get(currstac).size()-1).intValue() == 0)) {
 				stac.get(currstac).remove(stac.get(currstac).size()-1);
-				position = (direction) ? (position + 1)%instruct.get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(currinstruct).length-1;
+				position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
 			}
-			else if (instruct.get(currinstruct)[(direction) ? (position + 1)%instruct.get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(currinstruct).length-1].equals("[")) {
+			else if (instruct.get(instruct.size()-1).get(currinstruct)[(direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1].equals("[")) {
 				stac.get(currstac).remove(stac.get(currstac).size()-1);
-				while (!instruct.get(currinstruct)[position].equals("]")) {
-					position = (direction) ? (position + 1)%instruct.get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(currinstruct).length-1;
+				while (!instruct.get(instruct.size()-1).get(currinstruct)[position].equals("]")) {
+					position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
 				}
 			} else stac.get(currstac).remove(stac.get(currstac).size()-1);
 			break;
 
 		case "skip":
-			position = (direction) ? (position + 1)%instruct.get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(currinstruct).length-1;
+			position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
 			break;
 
 		case "loop":
@@ -375,7 +417,7 @@ public class Vitsy {
 			break;
 
 		case "rotateright":
-			@SuppressWarnings("all")
+
 			ArrayList<Double> temp1 = new ArrayList(0);
 			for (int k = 0; k < stac.get(currstac).size(); k++) {
 				temp1.add(stac.get(currstac).get((k+1)%stac.get(currstac).size()));
@@ -385,7 +427,7 @@ public class Vitsy {
 			break;
 
 		case "rotateleft":
-			@SuppressWarnings("all")
+
 			ArrayList<Double> temp2 = new ArrayList(0);
 			for (int k = 0; k < stac.get(currstac).size(); k++) {
 				temp2.add(stac.get(currstac).get((k-1 < 0) ? stac.get(currstac).size()-1: k-1));
@@ -424,23 +466,26 @@ public class Vitsy {
 		case "part":
 			stac.get(currstac).set(stac.get(currstac).size()-1, stac.get(currstac).get(stac.get(currstac).get(stac.get(currstac).size()-1).intValue()));
 			break;
-		/**
-		 * Soon to be implemented. c:
+			
 		case "classmethod":
+			int methodToUse = stac.get(currstac).get(stac.get(currstac).size()-2).intValue();
+			stac.get(currstac).remove(stac.get(currstac).size()-2).intValue();
+			methodHandler(methodToUse);
+			break;
+
+		case "super":
+			methodHandler(-2);
 			break;
 			
-		case "super":
-			break;
-		*/
 		case "objects":
 			objects.add(stac.get(currstac));
-			position = (direction) ? (position + 1): (position - 1 >= 0) ? position - 1: instruct.get(currinstruct).length-1;
-			int k = objectrefsold.indexOf(instruct.get(currinstruct)[position]);
+			position = (direction) ? (position + 1): (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
+			int k = objectrefsold.indexOf(instruct.get(instruct.size()-1).get(currinstruct)[position]);
 			if (k != -1) {
 				String placehold = objectrefs.get(k);
 				objectrefs.remove(k);
 			}
-			objectrefs.add(instruct.get(currinstruct)[position]);
+			objectrefs.add(instruct.get(instruct.size()-1).get(currinstruct)[position]);
 		case "rmstack":
 			stac.remove(currstac);
 			if (stac.size() != 0) {
@@ -515,10 +560,10 @@ public class Vitsy {
 
 		case "quote":
 			while (true) {
-				position = (direction) ? (position + 1)%instruct.get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(currinstruct).length-1;
-				if (instruct.get(currinstruct)[position].equals("\"") || instruct.get(currinstruct)[position].equals("\'")) break;
+				position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
+				if (instruct.get(instruct.size()-1).get(currinstruct)[position].equals("\"") || instruct.get(instruct.size()-1).get(currinstruct)[position].equals("\'")) break;
 
-				stac.get(currstac).add(((double)((String)instruct.get(currinstruct)[position]).toCharArray()[0]));
+				stac.get(currstac).add(((double)((String)instruct.get(instruct.size()-1).get(currinstruct)[position]).toCharArray()[0]));
 			}
 			break;
 
@@ -562,16 +607,16 @@ public class Vitsy {
 		case "randdir":
 			direction = (Math.random()<.5);
 			break;
-			
+
 		case "nothing":
-			int i = objectrefs.indexOf(instruct.get(currinstruct)[position]);
+			int i = objectrefs.indexOf(instruct.get(instruct.size()-1).get(currinstruct)[position]);
 			if (i != -1) {
 				stac.add(objects.get(i));
 				currstac = (currstac + 1) % stac.size();
 				objects.remove(i);
 				objectrefsold.add(objectrefs.get(i));
 				objectrefs.remove(i);
-			} else if ((i = objectrefsold.indexOf(instruct.get(currinstruct)[position])) != -1) {
+			} else if ((i = objectrefsold.indexOf(instruct.get(instruct.size()-1).get(currinstruct)[position])) != -1) {
 				objects.add(stac.get(currstac));
 				objectrefs.add(objectrefsold.get(i));
 				objectrefsold.remove(i);

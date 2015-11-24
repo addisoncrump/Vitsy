@@ -23,6 +23,12 @@ A program will only loop given that
 - The program is currently in either type of loop.
 - It is capturing a string.
 
+### ;ext and ;use
+- When you declare ;ext, the text following ;ext (with a space afterward) will be declared this class's superclass. This is important for use of the "K" command.
+- When you declare ;use, the text following ;use (with a space afterward) will be declared as used by this class. This is important for use of the "k" command.
+
+Note that these can extend to the StackOverflow limit.
+
 ### Basic Syntax
  - input: i
     - push the top item of the input stack as an integer to the program stack
@@ -130,6 +136,10 @@ A program will only loop given that
     - Push the current stack to an object referenced by the following character and remove it from the program stack. This will not override commands.
     - Once the aforementioned character is in the instruction pointer again, it will push the object's stack to the program stack.
     - Any character that is instantiated will draw the program's stack again if it has no object stack.'
+ - classmethod: k
+    - Pop the top two items of the stack. Using the second-to-top item, get the index of the 'use' declaration and load that class. Then execute the top item line of code.
+ - super: K
+    - Do the current line of code of the superclass (as defined in the 'ext' declaration).
  - file: \`
     - Pop the entire current stack as a string and open the file with that string name, pushing its contents to the stack.
  - changedir: |
