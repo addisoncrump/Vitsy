@@ -10,7 +10,7 @@ public class FileHandler {
 			if (!filename[0].equals("--code")) {
 				String line = "";
 				try (BufferedReader br = new BufferedReader(new FileReader(filename[0]))) {
-					while ((line=br.readLine())!=null && !line.startsWith(";ext")) file.add(line.split(""));
+					while ((line=br.readLine())!=null && !line.startsWith(";ext") && !line.startsWith(";use")) file.add(line.split(""));
 				} catch (Exception e) {
 					System.err.println("File "+filename[0]+" not found, exiting...");
 					e.printStackTrace();
@@ -33,16 +33,26 @@ public class FileHandler {
 			String line = "";
 			String totfiles = "";
 			try (BufferedReader br = new BufferedReader(new FileReader(filename[0]))) {
-				while ((line=br.readLine())!=null) if (line.startsWith(";use")) totfiles += line.substring(5) + " ";
+				while ((line=br.readLine())!=null) {
+					if (line.startsWith(";use") && new File(line.substring(5)).exists()) 
+						totfiles += line.substring(5) + " ";
+				}
 			} catch (Exception e) {}
 			file.add(totfiles.split(" "));
 		} else {
 			String line = "";
 			String totfiles = "";
 			try (BufferedReader br = new BufferedReader(new FileReader(filename[0]))) {
-				while ((line=br.readLine())!=null) if (line.startsWith(";ext")) totfiles += line.substring(5) + " ";
-			} catch (Exception e) {}
-			file.add(totfiles.split(" "));
+				while ((line=br.readLine())!=null) {
+					if (line.startsWith(";ext") && new File(line.substring(5)).exists()) 
+						totfiles = line.substring(5);
+				}
+			} catch (Exception e) {
+				System.out.println(filename[0]);
+				e.printStackTrace();
+				System.exit(1);
+			}
+			file.add(new String[]{totfiles});
 		}
 		return file;
 	}
