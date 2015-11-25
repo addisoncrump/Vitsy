@@ -1,0 +1,9 @@
+K
+;ext vitsy1
+;use vitsy3
+
+This part of the program is not loaded, as the buffered reader will stop at ;ext.
+
+Basically, this program:
+
+K            calls the superclass method at this line.

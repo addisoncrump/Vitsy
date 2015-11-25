@@ -42,7 +42,6 @@ public class Vitsy {
 
 	private static boolean looping = false;
 
-
 	public static void main(String[] args) throws InterruptedException, IOException {
 		stac.add(new ArrayList(0));
 		if (args.length == 0) {
@@ -439,7 +438,6 @@ public class Vitsy {
 			break;
 
 		case "rotateleft":
-
 			ArrayList<Double> temp2 = new ArrayList(0);
 			for (int k = 0; k < stac.get(currstac).size(); k++) {
 				temp2.add(stac.get(currstac).get((k-1 < 0) ? stac.get(currstac).size()-1: k-1));
@@ -583,9 +581,10 @@ public class Vitsy {
 			break;
 
 		case "quote":
+			String quotetype = instruct.get(instruct.size()-1).get(currinstruct)[position];
 			while (true) {
 				position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
-				if (instruct.get(instruct.size()-1).get(currinstruct)[position].equals("\"") || instruct.get(instruct.size()-1).get(currinstruct)[position].equals("\'")) break;
+				if (instruct.get(instruct.size()-1).get(currinstruct)[position].equals(quotetype) || instruct.get(instruct.size()-1).get(currinstruct)[position].equals(quotetype)) break;
 
 				stac.get(currstac).add(((double)((String)instruct.get(instruct.size()-1).get(currinstruct)[position]).toCharArray()[0]));
 			}

@@ -1,0 +1,23 @@
+ig1+\[DvG:Za":"ZY`a{Zv1+]
+;use vitsy2
+;use vitsy3
+
+This part of the program is not loaded, as the buffered reader will stop at ;ext.
+
+Basically, this program:
+
+
+ig1+\[DvG:Za":"ZY`a{Zv1+]
+i                         Pushes -1 for later use
+ g1+                      Gets the number of valid use declarations, adds one.
+    \[..................] For loop.
+      Dv                  Duplicate top item, save as temp variable.
+        G                 Get the name of the referenced class. -1 will return 'vitsy1', 0 returns 'vitsy2', 1 returns 'vitsy3', as the reference goes to that instance of 'use'.
+         :                Clone the stack.
+          Z               Output the entire stack - output the name, really.
+           a":"Z          Concatenate a ":" and a newline on the end of that.
+                Y         Remove a stack - we're now in the original stack.
+                 `        Read the file with the name as specified by the entire stack - the class file.
+                  a{      Tack on a newline there, too.
+                    Z     Output the stack - file contents.
+                     v1+  Push the variable to the stack, add one.
