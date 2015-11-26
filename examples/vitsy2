@@ -1,6 +1,6 @@
 K
-;ext vitsy1
-;use vitsy3
+;e vitsy1
+;u vitsy3
 
 This part of the program is not loaded, as the buffered reader will stop at ;ext.
 

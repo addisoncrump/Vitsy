@@ -23,9 +23,9 @@ A program will only loop given that
 - The program is currently in either type of loop.
 - It is capturing a string.
 
-### ;ext and ;use
-- When you declare ;ext, the text following ;ext (with a space afterward) will be declared this class's superclass. This is important for use of the "K" command.
-- When you declare ;use, the text following ;use (with a space afterward) will be declared as used by this class. This is important for use of the "k" command.
+### ;e and ;u
+- When you declare ;e, the text following ;ext (with a space afterward) will be declared this class's superclass. This is important for use of the "K" command.
+- When you declare ;u, the text following ;use (with a space afterward) will be declared as used by this class. This is important for use of the "k" command.
 
 Note that these can extend to the StackOverflow limit.
 
@@ -137,11 +137,11 @@ Note that these can extend to the StackOverflow limit.
     - Once the aforementioned character is in the instruction pointer again, it will push the object's stack to the program stack.
     - Any character that is instantiated will draw the program's stack again if it has no object stack.
  - classmethod: k
-    - Pop the top two items of the stack. Using the second-to-top item, get the index of the 'use' declaration and load that class. Then execute the top item line of code.
+    - Pop the top two items of the stack. Using the second-to-top item, get the index of the ';u' declaration and load that class. Then execute the top item line of code.
     - If the second to top item is -1, it will execute the specified line of code in the current program.
     - If the second to top item is -2, it will execute the specified line of code in the superclass.
  - super: K
-    - Do the current line of code of the superclass (as defined in the 'ext' declaration).
+    - Do the current line of code of the superclass (as defined in the ';e' declaration).
  - usecount: g
     - Count the amount of use declarations that are valid and push it to the stack.
  - classname: G

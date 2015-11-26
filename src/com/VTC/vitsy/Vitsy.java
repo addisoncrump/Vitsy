@@ -1,6 +1,7 @@
 package com.VTC.vitsy;
 import java.io.*;
 import java.util.*;
+import java.lang.reflect.*;
 
 @SuppressWarnings("all")
 public class Vitsy {
@@ -589,7 +590,7 @@ public class Vitsy {
 				stac.get(currstac).add(((double)((String)instruct.get(instruct.size()-1).get(currinstruct)[position]).toCharArray()[0]));
 			}
 			break;
-
+			
 		case "prime":
 			Double n = stac.get(currstac).get(stac.get(currstac).size()-1);
 			stac.get(currstac).remove(stac.get(currstac).size()-1);
