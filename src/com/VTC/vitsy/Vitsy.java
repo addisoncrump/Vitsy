@@ -344,7 +344,14 @@ public class Vitsy {
 			try {
 				stac.get(currstac).add((Double) jsengine.eval(toEvaluate));
 			} catch (ClassCastException e) {
-				stac.get(currstac).add(((Integer) jsengine.eval(toEvaluate)).doubleValue());
+				try {
+					stac.get(currstac).add(((Integer) jsengine.eval(toEvaluate)).doubleValue());
+				} catch (ClassCastException ex) {
+					String output = (String) jsengine.eval(toEvaluate);
+					for (int i = output.length(); i >= 0;) {
+						stac.get(currstac).add(new Double((int) output.substring(i-1, i--).toCharArray()[0]));
+					}
+				}
 			} catch (Exception e) {
 				stac.get(currstac).add(0/0.0);
 			}
