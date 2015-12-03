@@ -1,7 +1,7 @@
 'olleH'Z
 
-;e
+;e 
 
-This part of the program is not loaded, as the buffered reader will stop at ;ext.
+This part of the program is not loaded, as the buffered reader will stop at ;e.
 
 Basically, this program just outputs "Hello".

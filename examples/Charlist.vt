@@ -1,1 +1,9 @@
 027^\[DO1+]
+;u 
+
+This program:
+
+0            Push 0.
+ 27^         Push 128.
+    \[    ]  Repeat everything in brackets top item of the stack times.
+      DO1+   Duplicate, output, add 1.

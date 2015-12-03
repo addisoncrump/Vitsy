@@ -1,7 +1,6 @@
 package com.VTC.vitsy;
 
 public class OperativeHandler {
-	private static boolean operating = true;
 	public static String doOperation(String operator) {
 		switch (operator) {
 		case "1": return "1";
@@ -44,6 +43,7 @@ public class OperativeHandler {
 		case ";": return "end";
 		case "Z": return "printall";
 		case "z": return "getall";
+		case "W": return "prompt";
 		case "#": return "teleport";
 		case "r": return "reverse";
 		case "}": return "rotateright";
@@ -74,6 +74,8 @@ public class OperativeHandler {
 		case "g": return "usecount";
 		case "G": return "classname";
 		case "`": return "file";
+		case ".": return "write";
+		case ",": return "shell";
 		case "|": return "changedir";
 		case "<": return "goleft";
 		case ">": return "goright";
@@ -82,8 +84,5 @@ public class OperativeHandler {
 		case "\'": case "\"": return "quote";
 		}
 		return "nothing";
-	}
-	public static boolean operating() {
-		return operating;
 	}
 }

@@ -26,6 +26,7 @@ A program will only loop given that
 ### ;e and ;u
 - When you declare ;e, the text following ;ext (with a space afterward) will be declared this class's superclass. This is important for use of the "K" command.
 - When you declare ;u, the text following ;use (with a space afterward) will be declared as used by this class. This is important for use of the "k" command.
+- Disabled in Safe mode.
 
 Note that these can extend to the StackOverflow limit.
 
@@ -79,6 +80,8 @@ Note that these can extend to the StackOverflow limit.
     - Print out the entire current stack as characters. Equivalent to 'l\O'
  - getall: z
     - Get all the input of the input stack and push it to the stack. Equivalent to 'I\i'
+ - prompt: W
+    - Get a line of STDIN. If there is no line input into the program, pause the program until another input line is input.
  - teleport: #
     - Teleport to the 1-D coordinates of the top item of the stack.
  - length: l
@@ -140,16 +143,27 @@ Note that these can extend to the StackOverflow limit.
     - Pop the top two items of the stack. Using the second-to-top item, get the index of the ';u' declaration and load that class. Then execute the top item line of code.
     - If the second to top item is -1, it will execute the specified line of code in the current program.
     - If the second to top item is -2, it will execute the specified line of code in the superclass.
+    - Disabled in Safe mode.
  - super: K
     - Do the current line of code of the superclass (as defined in the ';e' declaration).
+    - Disabled in Safe mode.
  - usecount: g
     - Count the amount of use declarations that are valid and push it to the stack.
+    - Disabled in Safe mode.
  - classname: G
     - Get the name of the class as indexed by the top item of the stack.
     - If the reference index is -1, it will return the name of the current class.
     - If the reference index is -2, it will return the name of the superclass.
+    - Disabled in Safe mode.
  - file: \`
     - Pop the entire current stack as a string and open the file with that string name, pushing its contents to the stack.
+    - Disabled in Safe mode.
+ - write: .
+    - Pop the current stack and use that as a file name, then pop stack to the right and use that as contents of the file.
+    - Disabled in Safe mode.
+ - shell: ,
+    - Pop the current stack and use that as a command for use in the system terminal, then push the results of that terminal process to the current stack.
+    - Disabled in Safe mode.
  - changedir: |
     - Reverse the direction of the instruction pointer.
  - go left: <

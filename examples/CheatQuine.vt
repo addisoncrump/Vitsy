@@ -1,0 +1,9 @@
+iG`Z
+;u 
+
+This program:
+
+i      Grabs input. With no input, it'll push -1.
+ G     Grabs a valid ;u filename. If -2, push the superclass's name. If it's -1, push this class's name.
+  `    Read the file named with the contents of the stack.
+   Z   Output everything in the stack.

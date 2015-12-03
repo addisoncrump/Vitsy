@@ -1,0 +1,9 @@
+'rd3*Z
+;u
+
+This program:
+
+'        Read instructions as string until encountering itself, looping around the line if necessary.
+ r       Reverse the stack.
+  d3*    Push '.
+     Z   Ouput everything in the stack.
