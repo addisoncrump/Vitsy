@@ -1,6 +1,7 @@
 package com.VTC.vitsy;
 import java.io.*;
 import java.util.*;
+import javax.script.*;
 
 @SuppressWarnings("all")
 public class Vitsy {
@@ -45,8 +46,10 @@ public class Vitsy {
 	private static Double globalvar = null;
 
 	private static ArrayList<Boolean> looping = new ArrayList(0);
+	
+	private static ScriptEngine jsengine = new ScriptEngineManager().getEngineByName("js");
 
-	public static void main(String[] args) throws InterruptedException, IOException {
+	public static void main(String[] args) throws InterruptedException, IOException, ScriptException {
 		stac.add(new ArrayList(0));
 		looping.add(false);
 		if (args.length == 0) {
@@ -92,7 +95,7 @@ public class Vitsy {
 		in.close();
 	}
 
-	public static void methodHandler(int source) throws InterruptedException, IOException {
+	public static void methodHandler(int source) throws InterruptedException, IOException, ScriptException {
 		olddir.add(direction);
 		direction = true;
 		if (source == -1) {
@@ -141,7 +144,7 @@ public class Vitsy {
 		ending = false;
 	}
 
-	public static void forLoopHandler(int reps) throws InterruptedException, IOException {
+	public static void forLoopHandler(int reps) throws InterruptedException, IOException, ScriptException {
 		looping.add(true);
 		position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
 
@@ -167,7 +170,7 @@ public class Vitsy {
 		ending = false;
 	}
 
-	public static void loopHandler() throws InterruptedException, IOException {
+	public static void loopHandler() throws InterruptedException, IOException, ScriptException {
 		looping.add(true);
 		int startPos = position;
 
@@ -184,7 +187,7 @@ public class Vitsy {
 			ending = false;
 	}
 
-	public static void opHandle() throws InterruptedException, IOException {
+	public static void opHandle() throws InterruptedException, IOException, ScriptException {
 		boolean makingObject = false;
 		switch (OperativeHandler.doOperation((String) instruct.get(instruct.size()-1).get(currinstruct)[position])) {
 		case "1":
@@ -334,6 +337,19 @@ public class Vitsy {
 			} catch (Exception e) {}
 			break; 
 
+		case "eval":
+			String toEvaluate = "";
+			for (int i = stac.get(currstac).size() - 1; i >= 0; i--) toEvaluate += new String(new char[]{(char) (stac.get(currstac).get(i).intValue())});
+			stac.set(currstac, new ArrayList(0));
+			try {
+				stac.get(currstac).add((Double) jsengine.eval(toEvaluate));
+			} catch (ClassCastException e) {
+				stac.get(currstac).add(((Integer) jsengine.eval(toEvaluate)).doubleValue());
+			} catch (Exception e) {
+				stac.get(currstac).add(0/0.0);
+			}
+			break;
+			
 		case "ifnot":
 			if (stac.get(currstac).get(stac.get(currstac).size()-1).intValue() == 0 && instruct.get(instruct.size()-1).get(currinstruct)[(direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1].equals("[")) {
 				stac.get(currstac).remove(stac.get(currstac).size()-1);

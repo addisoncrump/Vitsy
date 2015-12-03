@@ -76,6 +76,7 @@ public class OperativeHandler {
 		case "`": return "file";
 		case ".": return "write";
 		case ",": return "shell";
+		case "n": return "eval";
 		case "|": return "changedir";
 		case "<": return "goleft";
 		case ">": return "goright";

@@ -164,6 +164,8 @@ Note that these can extend to the StackOverflow limit.
  - shell: ,
     - Pop the current stack and use that as a command for use in the system terminal, then push the results of that terminal process to the current stack.
     - Disabled in Safe mode.
+ - eval:
+    - Pop the current stack and evaluate the string equation, pushing the result to the current stack. If unevaluable, it will push NaN.
  - changedir: |
     - Reverse the direction of the instruction pointer.
  - go left: <
