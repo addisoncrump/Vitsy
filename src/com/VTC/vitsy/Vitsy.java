@@ -39,7 +39,7 @@ public class Vitsy {
 
 	private static boolean ending = false;
 
-	private static int currinstruct = 0;
+	private static int currin = 0;
 
 	private static Double tempvar = null;
 
@@ -87,10 +87,10 @@ public class Vitsy {
 		}
 		instruct.add(FileHandler.getFileInstruct(args, new boolean[]{false, false}));
 		while (!ending) {
-			if (!looping.get(looping.size()-1) && position > instruct.get(instruct.size()-1).get(currinstruct).length - 1 && oldpos.size()==0) System.exit(0);
-			else if (position < instruct.get(instruct.size()-1).get(currinstruct).length && !instruct.get(instruct.size()-1).get(currinstruct)[position].equals(""))
+			if (!looping.get(looping.size()-1) && position > currin().length - 1 && oldpos.size()==0) System.exit(0);
+			else if (position < currin().length && !currin()[position].equals(""))
 				opHandle();
-			position = (direction) ? (position + 1): (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
+			position = (direction) ? (position + 1): (position - 1 >= 0) ? position - 1: currin().length-1;
 		}
 		in.close();
 	}
@@ -99,18 +99,18 @@ public class Vitsy {
 		olddir.add(direction);
 		direction = true;
 		if (source == -1) {
-			oldpos.add(new Integer[]{currinstruct,position});
-			currinstruct = stac.get(currstac).get(stac.get(currstac).size()-1).intValue();
+			oldpos.add(new Integer[]{currin,position});
+			currin = top().intValue();
 			position = 0;
-			stac.get(currstac).remove(stac.get(currstac).size()-1);
-			while (position < instruct.get(instruct.size()-1).get(currinstruct).length && !ending) {
-				if (!looping.get(looping.size()-1) && position > instruct.get(instruct.size()-1).get(currinstruct).length - 1) {
+			rmtop();
+			while (position < currin().length && !ending) {
+				if (!looping.get(looping.size()-1) && position > currin().length - 1) {
 					break;
 				}
 				else opHandle();
-				position = (direction) ? (position + 1): (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
+				position = (direction) ? (position + 1): (position - 1 >= 0) ? position - 1: currin().length-1;
 			}
-			currinstruct = oldpos.get(oldpos.size()-1)[0].intValue();
+			currin = oldpos.get(oldpos.size()-1)[0].intValue();
 			position = oldpos.get(oldpos.size()-1)[1].intValue();
 			oldpos.remove(oldpos.size()-1);
 			direction = olddir.get(olddir.size()-1);
@@ -121,21 +121,21 @@ public class Vitsy {
 		instruct.add(FileHandler.getFileInstruct(new String[]{(source == -2)?extender.get(extender.size()-1):users.get(users.size()-1)[source]}, new boolean[]{false, false}));
 		users.add(FileHandler.getFileInstruct(new String[]{(source == -2)?extender.get(extender.size()-1):users.get(users.size()-1)[source]}, new boolean[]{true, false}).get(0));
 		extender.add(FileHandler.getFileInstruct(new String[]{(source == -2)?extender.get(extender.size()-1):users.get(users.size()-2)[source]}, new boolean[]{false, true}).get(0)[0]);
-		oldposext.add(new Integer[]{currinstruct, position});
-		currinstruct = (source == -2)?currinstruct:stac.get(currstac).get(stac.get(currstac).size()-1).intValue();
+		oldposext.add(new Integer[]{currin, position});
+		currin = (source == -2)?currin:top().intValue();
 		currclassname.add((source == -2)?extender.get(extender.size()-2):users.get(users.size()-2)[source]);
 		position = 0;
-		if (source != -2) stac.get(currstac).remove(stac.get(currstac).size()-1);
-		while (position < instruct.get(instruct.size()-1).get(currinstruct).length && !ending) {
-			if (!looping.get(looping.size()-1) && position > instruct.get(instruct.size()-1).get(currinstruct).length - 1) {
+		if (source != -2) rmtop();
+		while (position < currin().length && !ending) {
+			if (!looping.get(looping.size()-1) && position > currin().length - 1) {
 				break;
 			}
-			else if (!instruct.get(instruct.size()-1).get(currinstruct)[position].equals(""))
+			else if (!currin()[position].equals(""))
 				opHandle();
-			position = (direction) ? (position + 1): (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
+			position = (direction) ? (position + 1): (position - 1 >= 0) ? position - 1: currin().length-1;
 		}
 		instruct.remove(instruct.size()-1);
-		currinstruct = oldposext.get(oldposext.size()-1)[0].intValue();
+		currin = oldposext.get(oldposext.size()-1)[0].intValue();
 		position = oldposext.get(oldposext.size()-1)[1].intValue();
 		oldposext.remove(oldposext.size()-1);
 		currclassname.remove(currclassname.size()-1);
@@ -146,9 +146,9 @@ public class Vitsy {
 
 	public static void forLoopHandler(int reps) throws InterruptedException, IOException, ScriptException {
 		looping.add(true);
-		position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
+		move();
 
-		if (!instruct.get(instruct.size()-1).get(currinstruct)[position].equals("[")) {
+		if (!currin()[position].equals("[")) {
 			for (int x = 0; x < reps; x++) {
 				opHandle();
 			}
@@ -156,13 +156,13 @@ public class Vitsy {
 			int startPos = position;
 			outerloop:
 				for (int x = 0; x < reps && !ending; x++) {	
-					position = (direction) ? (startPos + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (!(startPos - 1 < 0)) ? startPos - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
-					while(!instruct.get(instruct.size()-1).get(currinstruct)[position].equals("]")) {
-						if (OperativeHandler.doOperation((String) instruct.get(instruct.size()-1).get(currinstruct)[position]) == ";") {
+					position = (direction) ? (startPos + 1)%currin().length: (!(startPos - 1 < 0)) ? startPos - 1: currin().length-1;
+					while(!currin()[position].equals("]")) {
+						if (OperativeHandler.doOperation((String) currin()[position]) == ";") {
 							break outerloop;
 						}
 						opHandle();
-						position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
+						move();
 					}
 				}
 		}
@@ -175,21 +175,21 @@ public class Vitsy {
 		int startPos = position;
 
 		while (!ending) {
-			position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
-			if (instruct.get(instruct.size()-1).get(currinstruct)[position].equals("]")) {
-				position = (direction) ? (startPos + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (startPos - 1 >= 0) ? startPos - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
+			move();
+			if (currin()[position].equals("]")) {
+				position = (direction) ? (startPos + 1)%currin().length: (startPos - 1 >= 0) ? startPos - 1: currin().length-1;
 			}
 			opHandle();
 		}
-		while (!instruct.get(instruct.size()-1).get(currinstruct)[position].equals("]"))
-			position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
+		while (!currin()[position].equals("]"))
+			move();
 			looping.remove(looping.size()-1);
 			ending = false;
 	}
 
 	public static void opHandle() throws InterruptedException, IOException, ScriptException {
 		boolean makingObject = false;
-		switch (OperativeHandler.doOperation((String) instruct.get(instruct.size()-1).get(currinstruct)[position])) {
+		switch (OperativeHandler.doOperation((String) currin()[position])) {
 		case "1":
 			stac.get(currstac).add(new Double(1));
 			break;
@@ -267,8 +267,8 @@ public class Vitsy {
 			break;
 
 		case "wait":
-			Thread.sleep((long) (stac.get(currstac).get(stac.get(currstac).size()-1)*1000));
-			stac.get(currstac).remove(stac.get(currstac).size()-1);
+			Thread.sleep((long) (top()*1000));
+			rmtop();
 			break;
 
 		case "method":
@@ -358,49 +358,49 @@ public class Vitsy {
 			break;
 			
 		case "ifnot":
-			if (stac.get(currstac).get(stac.get(currstac).size()-1).intValue() == 0 && instruct.get(instruct.size()-1).get(currinstruct)[(direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1].equals("[")) {
-				stac.get(currstac).remove(stac.get(currstac).size()-1);
-				position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
-				position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
-				while (!instruct.get(instruct.size()-1).get(currinstruct)[position].equals("]")){
+			if (top().intValue() == 0 && currin()[(direction) ? (position + 1)%currin().length: (position - 1 >= 0) ? position - 1: currin().length-1].equals("[")) {
+				rmtop();
+				move();
+				move();
+				while (!currin()[position].equals("]")){
 					opHandle();
-					position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
+					move();
 				}
-			} else if (stac.get(currstac).get(stac.get(currstac).size()-1).intValue() == 0) {
-				stac.get(currstac).remove(stac.get(currstac).size()-1);
-				position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
+			} else if (top().intValue() == 0) {
+				rmtop();
+				move();
 			}
-			else if (instruct.get(instruct.size()-1).get(currinstruct)[(direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1].equals("[")) {
-				stac.get(currstac).remove(stac.get(currstac).size()-1);
-				while (!instruct.get(instruct.size()-1).get(currinstruct)[position].equals("]")) {
-					position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
+			else if (currin()[(direction) ? (position + 1)%currin().length: (position - 1 >= 0) ? position - 1: currin().length-1].equals("[")) {
+				rmtop();
+				while (!currin()[position].equals("]")) {
+					move();
 				}
-			} else stac.get(currstac).remove(stac.get(currstac).size()-1);
+			} else rmtop();
 			break;
 
 		case "if":
-			if (!(stac.get(currstac).get(stac.get(currstac).size()-1).intValue() == 0) && instruct.get(instruct.size()-1).get(currinstruct)[(direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1].equals("[")) {
-				stac.get(currstac).remove(stac.get(currstac).size()-1);
-				position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
-				position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
-				while (!instruct.get(instruct.size()-1).get(currinstruct)[position].equals("]")){
+			if (!(top().intValue() == 0) && currin()[(direction) ? (position + 1)%currin().length: (position - 1 >= 0) ? position - 1: currin().length-1].equals("[")) {
+				rmtop();
+				move();
+				move();
+				while (!currin()[position].equals("]")){
 					opHandle();
-					position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
+					move();
 				}
-			} else if (!(stac.get(currstac).get(stac.get(currstac).size()-1).intValue() == 0)) {
-				stac.get(currstac).remove(stac.get(currstac).size()-1);
-				position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
+			} else if (!(top().intValue() == 0)) {
+				rmtop();
+				move();
 			}
-			else if (instruct.get(instruct.size()-1).get(currinstruct)[(direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1].equals("[")) {
-				stac.get(currstac).remove(stac.get(currstac).size()-1);
-				while (!instruct.get(instruct.size()-1).get(currinstruct)[position].equals("]")) {
-					position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
+			else if (currin()[(direction) ? (position + 1)%currin().length: (position - 1 >= 0) ? position - 1: currin().length-1].equals("[")) {
+				rmtop();
+				while (!currin()[position].equals("]")) {
+					move();
 				}
-			} else stac.get(currstac).remove(stac.get(currstac).size()-1);
+			} else rmtop();
 			break;
 
 		case "skip":
-			position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
+			move();
 			break;
 
 		case "loop":
@@ -408,32 +408,32 @@ public class Vitsy {
 			break;
 
 		case "sine":
-			stac.get(currstac).set(stac.get(currstac).size()-1,(Math.sin(stac.get(currstac).get(stac.get(currstac).size()-1))));
+			stac.get(currstac).set(stac.get(currstac).size()-1,(Math.sin(top())));
 			break;
 
 		case "asine":
-			stac.get(currstac).set(stac.get(currstac).size()-1,(Math.asin(stac.get(currstac).get(stac.get(currstac).size()-1))));
+			stac.get(currstac).set(stac.get(currstac).size()-1,(Math.asin(top())));
 			break;
 
 		case "cosine":
-			stac.get(currstac).set(stac.get(currstac).size()-1,(Math.cos(stac.get(currstac).get(stac.get(currstac).size()-1))));
+			stac.get(currstac).set(stac.get(currstac).size()-1,(Math.cos(top())));
 			break;
 
 		case "acosine":
-			stac.get(currstac).set(stac.get(currstac).size()-1,(Math.acos(stac.get(currstac).get(stac.get(currstac).size()-1))));
+			stac.get(currstac).set(stac.get(currstac).size()-1,(Math.acos(top())));
 			break;
 
 		case "tangent":
-			stac.get(currstac).set(stac.get(currstac).size()-1,(Math.tan(stac.get(currstac).get(stac.get(currstac).size()-1))));
+			stac.get(currstac).set(stac.get(currstac).size()-1,(Math.tan(top())));
 			break;
 
 		case "atangent":
-			stac.get(currstac).set(stac.get(currstac).size()-1,(Math.atan(stac.get(currstac).get(stac.get(currstac).size()-1))));
+			stac.get(currstac).set(stac.get(currstac).size()-1,(Math.atan(top())));
 			break;
 
 		case "repnextchar":
-			int repeats = stac.get(currstac).get(stac.get(currstac).size()-1).intValue();
-			stac.get(currstac).remove(stac.get(currstac).size()-1);
+			int repeats = top().intValue();
+			rmtop();
 			forLoopHandler(repeats);
 			break;
 
@@ -450,12 +450,12 @@ public class Vitsy {
 			break;
 
 		case "log":
-			stac.get(currstac).set(stac.get(currstac).size()-2, (Math.log(stac.get(currstac).get(stac.get(currstac).size()-2))/Math.log(stac.get(currstac).get(stac.get(currstac).size()-1))));
-			stac.get(currstac).remove(stac.get(currstac).size()-1);
+			stac.get(currstac).set(stac.get(currstac).size()-2, (Math.log(index(2))/Math.log(top())));
+			rmtop();
 			break;
 
 		case "outnum":
-			Double x = stac.get(currstac).get(stac.get(currstac).size()-1);
+			Double x = top();
 			if (x > 10000 && x.intValue() == x)
 				System.out.print(x.intValue());
 			else if (x > 10000) 
@@ -464,16 +464,16 @@ public class Vitsy {
 				System.out.print(x.intValue());
 			else
 				System.out.print(x);
-			stac.get(currstac).remove(stac.get(currstac).size()-1);
+			rmtop();
 			break;
 
 		case "rand":
-			stac.get(currstac).set(stac.get(currstac).size()-1, (Math.random()*stac.get(currstac).get(stac.get(currstac).size()-1)));
+			stac.get(currstac).set(stac.get(currstac).size()-1, (Math.random()*top()));
 			break;
 
 		case "outchar":
-			System.out.print((char) stac.get(currstac).get(stac.get(currstac).size()-1).intValue());
-			stac.get(currstac).remove(stac.get(currstac).size()-1);
+			System.out.print((char) top().intValue());
+			rmtop();
 			break;
 
 		case "end":
@@ -483,8 +483,8 @@ public class Vitsy {
 		case "printall":
 			int reps = stac.get(currstac).size();
 			for(int i = reps - 1; i >= 0; i--) {
-				System.out.print((char) stac.get(currstac).get(stac.get(currstac).size()-1).intValue());
-				stac.get(currstac).remove(stac.get(currstac).size()-1);
+				System.out.print((char) top().intValue());
+				rmtop();
 			}
 			break;
 
@@ -509,8 +509,8 @@ public class Vitsy {
 			break;
 
 		case "teleport":
-			position = stac.get(currstac).get(stac.get(currstac).size()-1).intValue()-2;
-			stac.get(currstac).remove(stac.get(currstac).size()-1);
+			position = top().intValue()-2;
+			rmtop();
 			break;
 
 		case "reverse":
@@ -536,13 +536,13 @@ public class Vitsy {
 			break;
 
 		case "duplicate":
-			stac.get(currstac).add(stac.get(currstac).get(stac.get(currstac).size()-1).doubleValue());
+			stac.get(currstac).add(top().doubleValue());
 			break;
 
 		case "tempvar":
 			if (tempvar == null) {
-				tempvar = stac.get(currstac).get(stac.get(currstac).size()-1);
-				stac.get(currstac).remove(stac.get(currstac).size()-1);
+				tempvar = top();
+				rmtop();
 			}
 			else {
 				stac.get(currstac).add(tempvar);
@@ -552,22 +552,22 @@ public class Vitsy {
 
 		case "globalvar":
 			if (globalvar == null) {
-				globalvar = stac.get(currstac).get(stac.get(currstac).size()-1);
-				stac.get(currstac).remove(stac.get(currstac).size()-1);
+				globalvar = top();
+				rmtop();
 			}
 			else stac.get(currstac).add(globalvar);
 			break;
 
 		case "remove":
-			stac.get(currstac).remove(stac.get(currstac).size()-1);
+			rmtop();
 			break;
 
 		case "part":
-			stac.get(currstac).set(stac.get(currstac).size()-1, stac.get(currstac).get(stac.get(currstac).get(stac.get(currstac).size()-1).intValue()));
+			stac.get(currstac).set(stac.get(currstac).size()-1, stac.get(currstac).get(top().intValue()));
 			break;
 
 		case "classmethod":
-			int methodToUse = stac.get(currstac).get(stac.get(currstac).size()-2).intValue();
+			int methodToUse = index(2).intValue();
 			stac.get(currstac).remove(stac.get(currstac).size()-2);
 			methodHandler(methodToUse);
 			break;
@@ -581,8 +581,8 @@ public class Vitsy {
 			break;
 
 		case "classname":
-			int usereference = stac.get(currstac).get(stac.get(currstac).size()-1).intValue();
-			stac.get(currstac).remove(stac.get(currstac).size()-1);
+			int usereference = top().intValue();
+			rmtop();
 			char[] classname = ((usereference >= 0)?users.get(users.size()-1)[usereference]:(usereference == -1)?currclassname.get(currclassname.size()-1):extender.get(extender.size()-1)).toCharArray();
 			for (int i = classname.length-1; i != -1; i--) {
 				stac.get(currstac).add(new Double((int) classname[i]));
@@ -591,12 +591,12 @@ public class Vitsy {
 
 		case "objects":
 			objects.add(stac.get(currstac));
-			position = (direction) ? (position + 1): (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
-			int k = objectrefsold.indexOf(instruct.get(instruct.size()-1).get(currinstruct)[position]);
+			position = (direction) ? (position + 1): (position - 1 >= 0) ? position - 1: currin().length-1;
+			int k = objectrefsold.indexOf(currin()[position]);
 			if (k != -1) {
 				objectrefs.remove(k);
 			}
-			objectrefs.add(instruct.get(instruct.size()-1).get(currinstruct)[position]);
+			objectrefs.add(currin()[position]);
 			makingObject = true;
 
 		case "rmstack":
@@ -627,43 +627,43 @@ public class Vitsy {
 			break;
 
 		case "add":
-			stac.get(currstac).set(stac.get(currstac).size()-2,stac.get(currstac).get(stac.get(currstac).size()-1)+(stac.get(currstac).get(stac.get(currstac).size()-2)));
-			stac.get(currstac).remove(stac.get(currstac).size()-1);
+			stac.get(currstac).set(stac.get(currstac).size()-2,top()+(index(2)));
+			rmtop();
 			break;
 
 		case "subtract":
-			stac.get(currstac).set(stac.get(currstac).size()-2,stac.get(currstac).get(stac.get(currstac).size()-2)-(stac.get(currstac).get(stac.get(currstac).size()-1)));
-			stac.get(currstac).remove(stac.get(currstac).size()-1);
+			stac.get(currstac).set(stac.get(currstac).size()-2,index(2)-(top()));
+			rmtop();
 			break;
 
 		case "multiply":
-			stac.get(currstac).set(stac.get(currstac).size()-2,stac.get(currstac).get(stac.get(currstac).size()-1)*(stac.get(currstac).get(stac.get(currstac).size()-2)));
-			stac.get(currstac).remove(stac.get(currstac).size()-1);
+			stac.get(currstac).set(stac.get(currstac).size()-2,top()*(index(2)));
+			rmtop();
 			break;
 
 		case "divide":
-			stac.get(currstac).set(stac.get(currstac).size()-2,stac.get(currstac).get(stac.get(currstac).size()-2)/(stac.get(currstac).get(stac.get(currstac).size()-1)));
-			stac.get(currstac).remove(stac.get(currstac).size()-1);
+			stac.get(currstac).set(stac.get(currstac).size()-2,index(2)/(top()));
+			rmtop();
 			break;
 
 		case "equal":
-			stac.get(currstac).set(stac.get(currstac).size()-2, (double) ((stac.get(currstac).get(stac.get(currstac).size()-2).doubleValue() == stac.get(currstac).get(stac.get(currstac).size()-1).doubleValue())? 1: 0));
-			stac.get(currstac).remove(stac.get(currstac).size()-1);
+			stac.get(currstac).set(stac.get(currstac).size()-2, (double) ((index(2).doubleValue() == top().doubleValue())? 1: 0));
+			rmtop();
 			break;
 
 		case "modulo":
-			stac.get(currstac).set(stac.get(currstac).size()-2,stac.get(currstac).get(stac.get(currstac).size()-2)%stac.get(currstac).get(stac.get(currstac).size()-1));
-			stac.get(currstac).remove(stac.get(currstac).size()-1);
+			stac.get(currstac).set(stac.get(currstac).size()-2,index(2)%top());
+			rmtop();
 			break;
 
 		case "power":
-			stac.get(currstac).set(stac.get(currstac).size()-2,Math.pow(stac.get(currstac).get(stac.get(currstac).size()-2),stac.get(currstac).get(stac.get(currstac).size()-1)));
-			stac.get(currstac).remove(stac.get(currstac).size()-1);
+			stac.get(currstac).set(stac.get(currstac).size()-2,Math.pow(index(2),top()));
+			rmtop();
 			break;
 
 		case "factorial":
 			double output = 1;
-			Double y = stac.get(currstac).get(stac.get(currstac).size()-1);
+			Double y = top();
 			for (int i=1; i<=y; i++) {
 				output*=i;
 			}
@@ -671,18 +671,17 @@ public class Vitsy {
 			break;
 
 		case "quote":
-			String quotetype = instruct.get(instruct.size()-1).get(currinstruct)[position];
+			String quotetype = currin()[position];
 			while (true) {
-				position = (direction) ? (position + 1)%instruct.get(instruct.size()-1).get(currinstruct).length: (position - 1 >= 0) ? position - 1: instruct.get(instruct.size()-1).get(currinstruct).length-1;
-				if (instruct.get(instruct.size()-1).get(currinstruct)[position].equals(quotetype) || instruct.get(instruct.size()-1).get(currinstruct)[position].equals(quotetype)) break;
-
-				stac.get(currstac).add(((double)((String)instruct.get(instruct.size()-1).get(currinstruct)[position]).toCharArray()[0]));
+				move();
+				if (currin()[position].equals(quotetype) || currin()[position].equals(quotetype)) break;
+				stac.get(currstac).add(((double)((String)currin()[position]).toCharArray()[0]));
 			}
 			break;
 
 		case "prime":
-			Double n = stac.get(currstac).get(stac.get(currstac).size()-1);
-			stac.get(currstac).remove(stac.get(currstac).size()-1);
+			Double n = top();
+			rmtop();
 			if(n < 2) {
 				stac.get(currstac).add(new Double(0));
 				break;
@@ -722,14 +721,14 @@ public class Vitsy {
 			break;
 
 		case "nothing":
-			int i = objectrefs.indexOf(instruct.get(instruct.size()-1).get(currinstruct)[position]);
+			int i = objectrefs.indexOf(currin()[position]);
 			if (i != -1) {
 				stac.add(objects.get(i));
 				currstac = (currstac + 1) % stac.size();
 				objects.remove(i);
 				objectrefsold.add(objectrefs.get(i));
 				objectrefs.remove(i);
-			} else if ((i = objectrefsold.indexOf(instruct.get(instruct.size()-1).get(currinstruct)[position])) != -1) {
+			} else if ((i = objectrefsold.indexOf(currin()[position])) != -1) {
 				objects.add(stac.get(currstac));
 				objectrefs.add(objectrefsold.get(i));
 				objectrefsold.remove(i);
@@ -741,5 +740,20 @@ public class Vitsy {
 				}
 			}
 		}
+	}
+	private static Double top() {
+		return index(1);
+	}
+	private static Double index(int i) {
+		return stac.get(currstac).get(stac.get(currstac).size()-i);
+	}
+	private static String[] currin() {
+		return instruct.get(instruct.size()-1).get(currin);
+	}
+	private static void move() {
+		position = (direction) ? (position + 1)%currin().length: (position - 1 >= 0) ? position - 1: currin().length-1;
+	}
+	private static void rmtop() {
+		stac.get(currstac).remove(stac.get(currstac).size()-1);
 	}
 }
