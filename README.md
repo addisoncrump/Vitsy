@@ -110,6 +110,9 @@ Note that these can extend to the StackOverflow limit.
     - Remove the current stack. This will shift you one stack to the right (if it exists).
  - numstack: y
     - Get the current number of stacks.
+ - flatten: u
+    - Push the contents of the top stack to the previous stack, removing the top stack in the process.
+    - Note that if there is only one stack, it push the contents of itself to itself, then remove itself, acting like rmstack.
  - tempvar: v
     - If there is no value in tempvar, set the top item of the stack to it. Otherwise, push the tempvar value to the stack and clear the value of tempvar.
  - globalvar: V
@@ -129,6 +132,10 @@ Note that these can extend to the StackOverflow limit.
     - If they are not equal, chop off the top item of the stack and replace it with a 1.
  - modulo: M
     - Modulo the top item of the stack by the second-to-top item of the stack.
+ - factorize: h
+    - Push the prime factors of top item of the stack to the stack.
+ - range: H
+    - Push the range from the second-to-top item to the top item of the stack to the stack.
  - power: ^
     - Put the second-to-top item of the stack to the power of the top item of the stack.
  - prime: p

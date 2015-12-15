@@ -55,6 +55,7 @@ public class OperativeHandler {
 		case "&": return "newstack";
 		case "Y": return "rmstack";
 		case "y": return "numstack";
+		case "u": return "flatten";
 		case "v": return "tempvar";
 		case "V": return "globalvar";
 		case "X": return "remove";
@@ -64,6 +65,8 @@ public class OperativeHandler {
 		case "/": return "divide";
 		case "=": return "equal";
 		case "M": return "modulo";
+		case "h": return "factorize";
+		case "H": return "range";
 		case "^": return "power";
 		case "F": return "factorial";
 		case "p": return "prime";
