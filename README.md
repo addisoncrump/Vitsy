@@ -30,6 +30,14 @@ A program will only loop given that
 
 Note that these can extend to the StackOverflow limit.
 
+### Verbose Mode
+- Verbose Mode is enabled through the command line with the "--verbose" flag.
+- Verbose Mode is only supported in the non-safe jar. This is planned to change in the future.
+- Basic Syntax:
+   - Separate every command with a semicolon.
+   - Separate every method index with a colon. (as you would separate every method in the golfed mode with a newline)
+   - For details on individual commands, please see Converter.java
+
 ### Basic Syntax
  - input: i
     - push the top item of the input stack as an integer to the program stack
@@ -43,8 +51,6 @@ Note that these can extend to the StackOverflow limit.
  - if: (
     - if the top item of the stack, post integer truncation, is equal to zero, do the next operation. Otherwise, skip it.
     - If an if statement is found before a [, it will execute all information in [] if and only if the top item is zero. 
- - skip: !
-    - skip the next operation.
  - loop: [
     - begin a loop.
  - end loop: ]
@@ -75,7 +81,7 @@ Note that these can extend to the StackOverflow limit.
  - rand: R
     - Get a random number between 0 and the top item of the stack.
  - end: ;
-    - End execution.
+    - End execution of the current method or break out of a current while loop.
  - printall: Z
     - Print out the entire current stack as characters. Equivalent to 'l\O'
  - getall: z
@@ -93,15 +99,17 @@ Note that these can extend to the StackOverflow limit.
  - reverse: r
     - Reverse the stack.
  - rotateright: }
-    - Rotate the stack to the right once.
+    - Take the bottom item of the stack to the top.
  - rotateleft: {
-    - Rotate the stack to the left once.
+    - Take the top item of the stack to the bottom.
  - duplicate: D
     - Duplicate the top item of the stack.
  - part: @
     - Get the top value of the stack's integer value and get its value's index, replacing the top value of the stack with said index.
- - changestack: ?
+ - rightstack: ?
     - Shift one stack to the right - note that this will wrap around, so the 2-dimensionality of the stacks are... finicky.
+ - leftstack: |
+    - Shift one stack to the left. This will also wrap around.
  - clnstack: :
     - Clone the current stack, creating a new one and pushing all of the contents of the current stack to it. You will shift to this stack after this operation.
  - newstack: &
@@ -173,14 +181,10 @@ Note that these can extend to the StackOverflow limit.
     - Disabled in Safe mode.
  - eval:
     - Pop the current stack and evaluate the string equation, pushing the result to the current stack. If unevaluable, it will push NaN.
- - changedir: |
-    - Reverse the direction of the instruction pointer.
  - go left: <
     - Turn the instruction pointer to the left.
  - go right: >
     - Turn the instruction pointer to the right.
- - randdir: x
-    - Turn the instruction pointer to a randomly selected left or right.
  - nothing:  
     - Anything undefined is a NOP.
  - quote: " or '
