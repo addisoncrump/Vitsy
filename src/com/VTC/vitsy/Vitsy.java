@@ -774,7 +774,7 @@ public class Vitsy {
 				loopmove();
 				if (currin()[position].trim().equals(quotetype) || currin()[position].trim().equals(quotetype))
 					break;
-				push(((double) ((String) currin()[position]).toCharArray()[0]));
+				push(((double) ((String) ((operationType instanceof VerboseHandler)?Converter.toGolfed(currin, position, currin()[position]):currin()[position])).toCharArray()[0]));
 			}
 			break;
 
