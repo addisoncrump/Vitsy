@@ -118,7 +118,7 @@ public class Vitsy {
 		while (!ending) {
 			if (!looping.get(looping.size() - 1) && position > currin().length - 1 && oldpos.size() == 0)
 				System.exit(0);
-			else if (position < currin().length && !currin()[position].equals(""))
+			else if (position < currin().length)
 				opHandle();
 			move();
 		}
@@ -141,7 +141,7 @@ public class Vitsy {
 		while (position < currin().length && !ending) {
 			if (!looping.get(looping.size() - 1) && position > currin().length - 1) {
 				break;
-			} else if (!currin()[position].equals(""))
+			} else
 				opHandle();
 			move();
 		}
@@ -219,7 +219,7 @@ public class Vitsy {
 		looping.add(true);
 		loopmove();
 
-		if (!currin()[position].equals((operationType instanceof GolfHandler) ? "[" : "begin recursive area")) {
+		if (!currin()[position].trim().equals((operationType instanceof GolfHandler) ? "[" : "begin recursive area")) {
 			for (int x = 0; x < reps; x++) {
 				opHandle();
 			}
@@ -228,9 +228,9 @@ public class Vitsy {
 			outerloop: for (int x = 0; x < reps && !ending; x++) {
 				position = (direction) ? (startPos + 1) % currin().length
 						: (!(startPos - 1 < 0)) ? startPos - 1 : currin().length - 1;
-				while (!currin()[position]
+				while (!currin()[position].trim()
 						.equals((operationType instanceof GolfHandler) ? "]" : "end recursive area")) {
-					if (operationType.doOperation((String) currin()[position]) == ";") {
+					if (operationType.doOperation(currin, position, (String) currin()[position].trim()) == "end") {
 						break outerloop;
 					}
 					opHandle();
@@ -249,13 +249,13 @@ public class Vitsy {
 
 		while (!ending) {
 			loopmove();
-			if (currin()[position].equals((operationType instanceof GolfHandler) ? "]" : "end recursive area")) {
+			if (currin()[position].trim().equals((operationType instanceof GolfHandler) ? "]" : "end recursive area")) {
 				position = (direction) ? (startPos + 1) % currin().length
 						: (startPos - 1 >= 0) ? startPos - 1 : currin().length - 1;
 			}
 			opHandle();
 		}
-		while (!currin()[position].equals((operationType instanceof GolfHandler) ? "]" : "end recursive area"))
+		while (!currin()[position].trim().equals((operationType instanceof GolfHandler) ? "]" : "end recursive area"))
 			loopmove();
 		looping.remove(looping.size() - 1);
 		ending = false;
@@ -263,7 +263,7 @@ public class Vitsy {
 
 	public void opHandle() throws InterruptedException, IOException, ScriptException, UnrecognizedInstructionException {
 		boolean makingObject = false;
-		switch (operationType.doOperation((String) currin()[position])) {
+		switch (operationType.doOperation(currin, position, (String) currin()[position].trim())) {
 		case "1":
 			push(new Double(1));
 			break;
@@ -445,7 +445,7 @@ public class Vitsy {
 				rmtop();
 				loopmove();
 				loopmove();
-				while (!currin()[position]
+				while (!currin()[position].trim()
 						.equals((operationType instanceof GolfHandler) ? "]" : "end recursive area")) {
 					opHandle();
 					loopmove();
@@ -457,7 +457,7 @@ public class Vitsy {
 					: (position - 1 >= 0) ? position - 1 : currin().length - 1]
 							.equals((operationType instanceof GolfHandler) ? "[" : "begin recursive area")) {
 				rmtop();
-				while (!currin()[position].equals((operationType instanceof GolfHandler) ? "]" : "end recursive area"))
+				while (!currin()[position].trim().equals((operationType instanceof GolfHandler) ? "]" : "end recursive area"))
 					loopmove();
 			} else
 				rmtop();
@@ -470,7 +470,7 @@ public class Vitsy {
 				rmtop();
 				loopmove();
 				loopmove();
-				while (!currin()[position]
+				while (!currin()[position].trim()
 						.equals((operationType instanceof GolfHandler) ? "]" : "end recursive area")) {
 					opHandle();
 					loopmove();
@@ -482,7 +482,7 @@ public class Vitsy {
 					: (position - 1 >= 0) ? position - 1 : currin().length - 1]
 							.equals((operationType instanceof GolfHandler) ? "[" : "begin recursive area")) {
 				rmtop();
-				while (!currin()[position].equals((operationType instanceof GolfHandler) ? "]" : "end recursive area"))
+				while (!currin()[position].trim().equals((operationType instanceof GolfHandler) ? "]" : "end recursive area"))
 					loopmove();
 			} else
 				rmtop();
@@ -682,11 +682,11 @@ public class Vitsy {
 		case "objects":
 			objects.add((Double[]) stac.get(currstac).toArray());
 			move();
-			int k = objectrefsold.indexOf(currin()[position]);
+			int k = objectrefsold.indexOf(currin()[position].trim());
 			if (k != -1) {
 				objectrefs.remove(k);
 			}
-			objectrefs.add(currin()[position]);
+			objectrefs.add(currin()[position].trim());
 			makingObject = true;
 
 		case "rmstack":
@@ -769,10 +769,10 @@ public class Vitsy {
 			break;
 
 		case "quote":
-			String quotetype = currin()[position];
+			String quotetype = currin()[position].trim();
 			while (true) {
 				loopmove();
-				if (currin()[position].equals(quotetype) || currin()[position].equals(quotetype))
+				if (currin()[position].trim().equals(quotetype) || currin()[position].trim().equals(quotetype))
 					break;
 				push(((double) ((String) currin()[position]).toCharArray()[0]));
 			}
@@ -869,7 +869,11 @@ public class Vitsy {
 			}
 		}
 	}
-
+	
+	public int getCurrin() {
+		return currstac;
+	}
+	
 	private Double top() {
 		return index(1);
 	}

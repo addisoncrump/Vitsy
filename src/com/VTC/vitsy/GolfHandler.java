@@ -1,7 +1,7 @@
 package com.VTC.vitsy;
 
 public class GolfHandler implements Operable {
-	public String doOperation(String operator) {
+	public String doOperation(int currin, int position, String operator) {
 		switch (operator) {
 		case "1":
 			return "1";

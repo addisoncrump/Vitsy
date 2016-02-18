@@ -1,7 +1,7 @@
 package com.VTC.vitsy;
 
 public class Converter {
-	public static String toVerbose(String operator) throws UnrecognizedInstructionException {
+	public static String toVerbose(int currin, int position, String operator) throws UnrecognizedInstructionException {
 		switch (operator) {
 		case "1":
 			return "push 1";
@@ -169,11 +169,12 @@ public class Converter {
 			return "toggle double quote";
 		}
 		if (operator.length() > 1)
-			throw new UnrecognizedInstructionException("Could not recognize instruction: " + operator);
+			throw new UnrecognizedInstructionException(
+					"Could not recognize instruction: " + operator + " (command #" + currin + "," + position + ")");
 		return operator;
 	}
 
-	public static String toGolfed(String operator) throws UnrecognizedInstructionException {
+	public static String toGolfed(int currin, int position, String operator) throws UnrecognizedInstructionException {
 		switch (operator) {
 		case "push 1":
 			return "1";
@@ -340,10 +341,9 @@ public class Converter {
 		case "toggle double quote":
 			return "\"";
 		}
-		if (operator.length() > 1) {
-			throw new UnrecognizedInstructionException("Warning: unrecognized operator: " + operator
-					+ "\nYou may have problems with quotations being loaded correctly. Throwing fallback.");
-		}
+		if (operator.length() > 1) 
+			throw new UnrecognizedInstructionException(
+					"Warning: unrecognized operator: " + operator + " (command #" + currin + ","+ position + ")");
 		return operator;
 	}
 }
