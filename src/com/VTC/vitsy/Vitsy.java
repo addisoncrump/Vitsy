@@ -177,9 +177,9 @@ public class Vitsy {
 	}
 
 	private void superMethod() {
-		instruct.add((ArrayList<String[]>) fileType.getFileInstruct(
+		instruct.add(fileType.getFileInstruct(
 				new ArrayList(Arrays
-						.asList(new ArrayList(Arrays.asList(new String[] { extender.get(extender.size() - 1) })))),
+						.asList((new String[] { extender.get(extender.size() - 1) }))),
 				false, new boolean[] { false, false }));
 		users.add(fileType
 				.getFileInstruct(new ArrayList(Arrays.asList(new String[] { extender.get(extender.size() - 1) })),
@@ -195,9 +195,9 @@ public class Vitsy {
 	}
 
 	private void useMethod(int source) {
-		instruct.add((ArrayList<String[]>) fileType.getFileInstruct(
+		instruct.add(fileType.getFileInstruct(
 				new ArrayList(Arrays
-						.asList(new ArrayList(Arrays.asList(new String[] { users.get(users.size() - 1)[source] })))),
+						.asList((new String[] { users.get(users.size() - 1)[source] }))),
 				false, new boolean[] { false, false }));
 		users.add(fileType
 				.getFileInstruct(new ArrayList(Arrays.asList(new String[] { users.get(users.size() - 1)[source] })),
