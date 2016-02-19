@@ -433,14 +433,12 @@ public class Vitsy {
 				char[] output = ((String) evaluated).toCharArray();
 				for (int i = output.length - 1; i >= 0; i--)
 					push(new BigDecimal((int) output[i]));
-			} else {
-				push(new BigDecimal(0 / 0.0));
 			}
 			break;
 
 		case "ifnot":
-			if (top().toBigInteger().compareTo(new BigDecimal(0).toBigInteger()) == 0 && currin()[(direction) ? (position + 1) % currin().length
-					: (position - 1 >= 0) ? position - 1 : currin().length - 1]
+			if (top().toBigInteger().compareTo(new BigDecimal(0).toBigInteger()) == 0 && currin()[(direction)
+					? (position + 1) % currin().length : (position - 1 >= 0) ? position - 1 : currin().length - 1]
 							.equals((operationType instanceof GolfHandler) ? "[" : "begin recursive area")) {
 				System.out.println("1;");
 				rmtop();
@@ -467,8 +465,8 @@ public class Vitsy {
 			break;
 
 		case "if":
-			if (top().toBigInteger().compareTo(new BigDecimal(0).toBigInteger()) != 0 && currin()[(direction) ? (position + 1) % currin().length
-					: (position - 1 >= 0) ? position - 1 : currin().length - 1]
+			if (top().toBigInteger().compareTo(new BigDecimal(0).toBigInteger()) != 0 && currin()[(direction)
+					? (position + 1) % currin().length : (position - 1 >= 0) ? position - 1 : currin().length - 1]
 							.equals((operationType instanceof GolfHandler) ? "[" : "begin recursive area")) {
 				rmtop();
 				loopmove();
@@ -737,7 +735,7 @@ public class Vitsy {
 			break;
 
 		case "divide":
-			setind(2, index(2).divide(top()));
+			setind(2, index(2).divide(top(), 20, BigDecimal.ROUND_HALF_DOWN));
 			rmtop();
 			break;
 
@@ -759,7 +757,7 @@ public class Vitsy {
 		case "factorial":
 			BigDecimal output = new BigDecimal(1);
 			BigDecimal y = top();
-			for (BigDecimal i = new BigDecimal(1); i.compareTo(y) == -1; i=i.add(new BigDecimal(1))) {
+			for (BigDecimal i = new BigDecimal(1); i.compareTo(y) == -1; i = i.add(new BigDecimal(1))) {
 				output = i.multiply(output);
 			}
 			settop(output);
