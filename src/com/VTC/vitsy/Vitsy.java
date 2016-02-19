@@ -619,6 +619,16 @@ public class Vitsy {
 			stac.add(temp2);
 			break;
 
+		case "singswitch":
+			multiswitch(2);
+			break;
+
+		case "multiswitch":
+			int temp4 = top().toBigInteger().mod(new BigDecimal(stac.get(currstac).size()).toBigInteger()).intValue();
+			rmtop();
+			multiswitch(temp4);
+			break;
+
 		case "duplicate":
 			push(top());
 			break;
@@ -915,6 +925,14 @@ public class Vitsy {
 
 	private void push(BigDecimal x) {
 		stac.get(currstac).add(x);
+	}
+
+	private void multiswitch(int amount) {
+		BigDecimal temp = index(amount);
+		for (int i = amount; i > 1;) {
+			setind(i, index(--i));
+		}
+		settop(temp);
 	}
 
 	public String toString() {

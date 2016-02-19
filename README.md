@@ -97,6 +97,10 @@ Note that these can extend to the StackOverflow limit.
     - Repeat the operations encapsulated in the [] for the number of times specified by the top value of the stack.
  - reverse: r
     - Reverse the stack.
+ - singswitch: $
+    - Switch the top two items of the stack.
+ - multiswitch: %
+    - Rotate the top top items of the stack.
  - rotateright: }
     - Take the bottom item of the stack to the top.
  - rotateleft: {

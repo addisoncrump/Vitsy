@@ -87,6 +87,10 @@ public class GolfHandler implements Operable {
 			return "teleport";
 		case "r":
 			return "reverse";
+		case "$":
+			return "singswitch";
+		case "%":
+			return "multiswitch";
 		case "}":
 			return "rotateright";
 		case "{":

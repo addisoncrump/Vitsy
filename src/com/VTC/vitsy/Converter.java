@@ -87,6 +87,10 @@ public class Converter {
 			return "teleport to top instruction";
 		case "r":
 			return "reverse stack";
+		case "$":
+			return "switch the top two items";
+		case "%":
+			return "rotate the top top items";
 		case "}":
 			return "rotate stack right";
 		case "{":
@@ -260,6 +264,10 @@ public class Converter {
 			return "#";
 		case "reverse stack":
 			return "r";
+		case "switch the top two items":
+			return "$";
+		case "rotate the top top items":
+			return "%";
 		case "rotate stack right":
 			return "}";
 		case "rotate stack left":
