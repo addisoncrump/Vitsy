@@ -12,16 +12,16 @@ Vitsy comes from a common shortening for my alias, VTC, pronounced as a word.
 This jar file exists for servers with online interpreters. It is the 'safe mode' jar.
 
 ### Command Line Usage
-You can either write a program to a file and run it from said file with "java -jar Vitsy.jar <filename> [arg 1] [arg 2] ..." or directly from the command line with "java -jar Vitsy.jar --code '<program>' [arg 1] [arg 2] ..."'
-You can force values to be parsed as string input with "java -jar Vitsy.jar <filename | --code '<program>'> -v [num 1] [num 2] ..."
+You can either write a program to a file and run it from said file with "java -jar Vitsy.jar [--verbose] <filename> [arg 1] [arg 2] ..." or directly from the command line with "java -jar Vitsy.jar [--verbose] --code '<program>' [arg 1] [arg 2] ..."'
+You can force values to be parsed as string input with "java -jar Vitsy.jar [--verbose] <filename | --code '<program>'> -v [num 1] [num 2] ..."
 Note that an empty program will print out the lyrics to 99 bottles of beer. c:
 
 ### Wrap Nature
 A program will only loop given that
 
 - The last character on the line is a skip.
-- The program is currently in either type of loop.
-- It is capturing a string.
+- The program is currently in any type of recursion (including if statements).
+- The program is capturing a string.
 
 ### ;e and ;u
 - When you declare ;e, the text following ;ext (with a space afterward) will be declared this class's superclass. This is important for use of the "K" command.
@@ -32,7 +32,6 @@ Note that these can extend to the StackOverflow limit.
 
 ### Verbose Mode
 - Verbose Mode is enabled through the command line with the "--verbose" flag.
-- Verbose Mode is only supported in the non-safe jar. This is planned to change in the future.
 - Basic Syntax:
    - Separate every command with a semicolon.
    - Separate every method index with a colon. (as you would separate every method in the golfed mode with a newline)

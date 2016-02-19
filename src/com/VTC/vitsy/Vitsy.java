@@ -1,6 +1,8 @@
 package com.VTC.vitsy;
 
 import java.io.*;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.*;
 import javax.script.*;
 
@@ -16,7 +18,7 @@ public class Vitsy {
 
 	private int position = 0;
 
-	private ArrayList<ArrayList<Double>> stac = new ArrayList(0);
+	private ArrayList<ArrayList<BigDecimal>> stac = new ArrayList(0);
 
 	private ArrayList<Integer[]> oldpos = new ArrayList(0);
 
@@ -26,7 +28,7 @@ public class Vitsy {
 
 	private ArrayList<ArrayList<String[]>> instruct = new ArrayList(0);
 
-	private ArrayList<Double[]> objects = new ArrayList(0);
+	private ArrayList<BigDecimal[]> objects = new ArrayList(0);
 
 	private ArrayList<String> objectrefs = new ArrayList(0);
 
@@ -48,9 +50,9 @@ public class Vitsy {
 
 	private int currin = 0;
 
-	private Double tempvar = null;
+	private BigDecimal tempvar = null;
 
-	private Double globalvar = null;
+	private BigDecimal globalvar = null;
 
 	private ArrayList<Boolean> looping = new ArrayList(0);
 
@@ -93,14 +95,14 @@ public class Vitsy {
 				}
 				try {
 					for (int i = 1; i < args.size(); i++)
-						Double.parseDouble(args.get(i));
+						new BigDecimal(args.get(i));
 				} catch (Exception e) {
 					cansplit = false;
 				}
 				String[] arrinput = (cansplit) ? arrin.split(" ") : arrin.split("");
 				for (int i = 0; i < arrinput.length; i++) {
 					if (cansplit)
-						push(Double.parseDouble(arrinput[i]));
+						push(new BigDecimal(arrinput[i]));
 					else
 						input.add(arrinput[i]);
 				}
@@ -178,9 +180,8 @@ public class Vitsy {
 
 	private void superMethod() {
 		instruct.add(fileType.getFileInstruct(
-				new ArrayList(Arrays
-						.asList((new String[] { extender.get(extender.size() - 1) }))),
-				false, new boolean[] { false, false }));
+				new ArrayList(Arrays.asList((new String[] { extender.get(extender.size() - 1) }))), false,
+				new boolean[] { false, false }));
 		users.add(fileType
 				.getFileInstruct(new ArrayList(Arrays.asList(new String[] { extender.get(extender.size() - 1) })),
 						false, new boolean[] { true, false })
@@ -196,9 +197,8 @@ public class Vitsy {
 
 	private void useMethod(int source) {
 		instruct.add(fileType.getFileInstruct(
-				new ArrayList(Arrays
-						.asList((new String[] { users.get(users.size() - 1)[source] }))),
-				false, new boolean[] { false, false }));
+				new ArrayList(Arrays.asList((new String[] { users.get(users.size() - 1)[source] }))), false,
+				new boolean[] { false, false }));
 		users.add(fileType
 				.getFileInstruct(new ArrayList(Arrays.asList(new String[] { users.get(users.size() - 1)[source] })),
 						false, new boolean[] { true, false })
@@ -265,84 +265,84 @@ public class Vitsy {
 		boolean makingObject = false;
 		switch (operationType.doOperation(currin, position, (String) currin()[position].trim())) {
 		case "1":
-			push(new Double(1));
+			push(new BigDecimal(1));
 			break;
 
 		case "2":
-			push(new Double(2));
+			push(new BigDecimal(2));
 			break;
 
 		case "3":
-			push(new Double(3));
+			push(new BigDecimal(3));
 			break;
 
 		case "4":
-			push(new Double(4));
+			push(new BigDecimal(4));
 			break;
 
 		case "5":
-			push(new Double(5));
+			push(new BigDecimal(5));
 			break;
 
 		case "6":
-			push(new Double(6));
+			push(new BigDecimal(6));
 			break;
 
 		case "7":
-			push(new Double(7));
+			push(new BigDecimal(7));
 			break;
 
 		case "8":
-			push(new Double(8));
+			push(new BigDecimal(8));
 			break;
 
 		case "9":
-			push(new Double(9));
+			push(new BigDecimal(9));
 			break;
 
 		case "a":
-			push(new Double(10));
+			push(new BigDecimal(10));
 			break;
 
 		case "b":
-			push(new Double(11));
+			push(new BigDecimal(11));
 			break;
 
 		case "c":
-			push(new Double(12));
+			push(new BigDecimal(12));
 			break;
 
 		case "d":
-			push(new Double(13));
+			push(new BigDecimal(13));
 			break;
 
 		case "e":
-			push(new Double(14));
+			push(new BigDecimal(14));
 			break;
 
 		case "f":
-			push(new Double(15));
+			push(new BigDecimal(15));
 			break;
 
 		case "0":
-			push(new Double(0));
+			push(new BigDecimal(0));
 			break;
 
 		case "input":
 			if (input.size() == 0)
-				push(-1.0);
+				push(new BigDecimal(-1.0));
 			else {
-				push((double) ((int) input.get(input.size() - 1).toCharArray()[0]));
+				push(new BigDecimal((int) input.get(input.size() - 1).toCharArray()[0]));
 				input.remove(input.size() - 1);
 			}
 			break;
 
 		case "inlength":
-			push((double) input.size());
+			push(new BigDecimal((double) input.size()));
 			break;
 
 		case "wait":
-			Thread.sleep((long) (top() * 1000));
+			Thread.sleep((long) (top().doubleValue() * 1000));
 			rmtop();
 			break;
 
@@ -364,7 +364,7 @@ public class Vitsy {
 				fis.close();
 				char[] stuffs = new String(data, "UTF-8").toCharArray();
 				for (int i = stuffs.length - 1; i >= 0; i--) {
-					push((double) stuffs[i]);
+					push(new BigDecimal((double) stuffs[i]));
 				}
 			} catch (FileNotFoundException e) {
 			}
@@ -409,10 +409,10 @@ public class Vitsy {
 				while ((line = br.readLine()) != null)
 					fullout += line;
 				try {
-					push(Double.parseDouble(fullout));
+					push(new BigDecimal(Double.parseDouble(fullout)));
 				} catch (Exception e) {
 					for (int i = fullout.length(); i > 0;) {
-						push(new Double((int) ((char) fullout.substring(i - 1, i--).toCharArray()[0])));
+						push(new BigDecimal((int) ((char) fullout.substring(i - 1, i--).toCharArray()[0])));
 					}
 				}
 			} catch (Exception e) {
@@ -426,22 +426,23 @@ public class Vitsy {
 			stac.set(currstac, new ArrayList(0));
 			Object evaluated = jsengine.eval(toEvaluate);
 			if (evaluated instanceof Double)
-				push((Double) evaluated);
+				push(new BigDecimal((Double) evaluated));
 			else if (evaluated instanceof Integer)
-				push(((Integer) jsengine.eval(toEvaluate)).doubleValue());
+				push(new BigDecimal(((Integer) evaluated)));
 			else if (evaluated instanceof String) {
-				char[] output = ((String) jsengine.eval(toEvaluate)).toCharArray();
+				char[] output = ((String) evaluated).toCharArray();
 				for (int i = output.length - 1; i >= 0; i--)
-					push(new Double((int) output[i]));
+					push(new BigDecimal((int) output[i]));
 			} else {
-				push(0 / 0.0);
+				push(new BigDecimal(0 / 0.0));
 			}
 			break;
 
 		case "ifnot":
-			if (top().intValue() == 0 && currin()[(direction) ? (position + 1) % currin().length
+			if (top().toBigInteger().compareTo(new BigDecimal(0).toBigInteger()) == 0 && currin()[(direction) ? (position + 1) % currin().length
 					: (position - 1 >= 0) ? position - 1 : currin().length - 1]
 							.equals((operationType instanceof GolfHandler) ? "[" : "begin recursive area")) {
+				System.out.println("1;");
 				rmtop();
 				loopmove();
 				loopmove();
@@ -450,21 +451,23 @@ public class Vitsy {
 					opHandle();
 					loopmove();
 				}
-			} else if (top().intValue() == 0) {
+			} else if (top().toBigInteger().compareTo(new BigDecimal(0).toBigInteger()) == 0)
 				rmtop();
-				loopmove();
-			} else if (currin()[(direction) ? (position + 1) % currin().length
+			else if (currin()[(direction) ? (position + 1) % currin().length
 					: (position - 1 >= 0) ? position - 1 : currin().length - 1]
 							.equals((operationType instanceof GolfHandler) ? "[" : "begin recursive area")) {
 				rmtop();
-				while (!currin()[position].trim().equals((operationType instanceof GolfHandler) ? "]" : "end recursive area"))
+				while (!currin()[position].trim()
+						.equals((operationType instanceof GolfHandler) ? "]" : "end recursive area"))
 					loopmove();
-			} else
+			} else {
 				rmtop();
+				loopmove();
+			}
 			break;
 
 		case "if":
-			if (!(top().intValue() == 0) && currin()[(direction) ? (position + 1) % currin().length
+			if (top().toBigInteger().compareTo(new BigDecimal(0).toBigInteger()) != 0 && currin()[(direction) ? (position + 1) % currin().length
 					: (position - 1 >= 0) ? position - 1 : currin().length - 1]
 							.equals((operationType instanceof GolfHandler) ? "[" : "begin recursive area")) {
 				rmtop();
@@ -475,17 +478,19 @@ public class Vitsy {
 					opHandle();
 					loopmove();
 				}
-			} else if (!(top().intValue() == 0)) {
+			} else if (top().toBigInteger().compareTo(new BigDecimal(0).toBigInteger()) != 0)
 				rmtop();
-				loopmove();
-			} else if (currin()[(direction) ? (position + 1) % currin().length
+			else if (currin()[(direction) ? (position + 1) % currin().length
 					: (position - 1 >= 0) ? position - 1 : currin().length - 1]
 							.equals((operationType instanceof GolfHandler) ? "[" : "begin recursive area")) {
 				rmtop();
-				while (!currin()[position].trim().equals((operationType instanceof GolfHandler) ? "]" : "end recursive area"))
+				while (!currin()[position].trim()
+						.equals((operationType instanceof GolfHandler) ? "]" : "end recursive area"))
 					loopmove();
-			} else
+			} else {
 				rmtop();
+				loopmove();
+			}
 			break;
 
 		case "skip":
@@ -497,27 +502,27 @@ public class Vitsy {
 			break;
 
 		case "sine":
-			settop((Math.sin(top())));
+			settop(new BigDecimal(Math.sin(top().doubleValue())));
 			break;
 
 		case "asine":
-			settop((Math.asin(top())));
+			settop(new BigDecimal(Math.asin(top().doubleValue())));
 			break;
 
 		case "cosine":
-			settop((Math.cos(top())));
+			settop(new BigDecimal(Math.cos(top().doubleValue())));
 			break;
 
 		case "acosine":
-			settop((Math.acos(top())));
+			settop(new BigDecimal(Math.acos(top().doubleValue())));
 			break;
 
 		case "tangent":
-			settop((Math.tan(top())));
+			settop(new BigDecimal(Math.tan(top().doubleValue())));
 			break;
 
 		case "atangent":
-			settop((Math.atan(top())));
+			settop(new BigDecimal(Math.atan(top().doubleValue())));
 			break;
 
 		case "repnextchar":
@@ -527,37 +532,29 @@ public class Vitsy {
 			break;
 
 		case "length":
-			push((double) stac.get(currstac).size());
+			push(new BigDecimal(stac.get(currstac).size()));
 			break;
 
 		case "pi":
-			push((Math.PI));
+			push(new BigDecimal(Math.PI));
 			break;
 
 		case "E":
-			push((Math.E));
+			push(new BigDecimal(Math.E));
 			break;
 
 		case "log":
-			setind(2, (Math.log(index(2)) / Math.log(top())));
+			setind(2, new BigDecimal(Math.log(index(2).doubleValue()) / Math.log(top().doubleValue())));
 			rmtop();
 			break;
 
 		case "outnum":
-			Double x = top();
-			if (x > 10000 && x.intValue() == x)
-				System.out.print(x.intValue());
-			else if (x > 10000)
-				System.out.printf("%f", x);
-			else if (x.intValue() == x)
-				System.out.print(x.intValue());
-			else
-				System.out.print(x);
+			System.out.print(top());
 			rmtop();
 			break;
 
 		case "rand":
-			settop((Math.random() * top()));
+			settop(top().multiply(new BigDecimal(Math.random())));
 			break;
 
 		case "outchar":
@@ -580,7 +577,7 @@ public class Vitsy {
 		case "getall":
 			int reps2 = input.size();
 			for (int i = reps2 - 1; i >= 0; i--) {
-				push((double) ((int) input.get(input.size() - 1).toCharArray()[0]));
+				push(new BigDecimal((int) input.get(input.size() - 1).toCharArray()[0]));
 				input.remove(input.size() - 1);
 			}
 			break;
@@ -589,10 +586,10 @@ public class Vitsy {
 			String prompt = "";
 			prompt = in.nextLine();
 			try {
-				push(Double.parseDouble(prompt));
+				push(new BigDecimal(Double.parseDouble(prompt)));
 			} catch (Exception e) {
 				for (int i = prompt.length(); i > 0;) {
-					push(new Double((int) ((char) prompt.substring(i - 1, i--).toCharArray()[0])));
+					push(new BigDecimal((int) ((char) prompt.substring(i - 1, i--).toCharArray()[0])));
 				}
 			}
 			break;
@@ -607,7 +604,7 @@ public class Vitsy {
 			break;
 
 		case "rotateright":
-			ArrayList<Double> temp1 = new ArrayList(0);
+			ArrayList<BigDecimal> temp1 = new ArrayList(0);
 			for (int k = 0; k < stac.get(currstac).size(); k++) {
 				temp1.add(stac.get(currstac).get((k + 1) % stac.get(currstac).size()));
 			}
@@ -616,7 +613,7 @@ public class Vitsy {
 			break;
 
 		case "rotateleft":
-			ArrayList<Double> temp2 = new ArrayList(0);
+			ArrayList<BigDecimal> temp2 = new ArrayList(0);
 			for (int k = 0; k < stac.get(currstac).size(); k++) {
 				temp2.add(stac.get(currstac).get((k - 1 < 0) ? stac.get(currstac).size() - 1 : k - 1));
 			}
@@ -625,7 +622,7 @@ public class Vitsy {
 			break;
 
 		case "duplicate":
-			push(top().doubleValue());
+			push(top());
 			break;
 
 		case "tempvar":
@@ -665,7 +662,7 @@ public class Vitsy {
 			break;
 
 		case "usecount":
-			push(new Double(users.get(users.size() - 1).length));
+			push(new BigDecimal(users.get(users.size() - 1).length));
 			break;
 
 		case "classname":
@@ -675,12 +672,12 @@ public class Vitsy {
 					: (usereference == -1) ? currclassname.get(currclassname.size() - 1)
 							: extender.get(extender.size() - 1)).toCharArray();
 			for (int i = classname.length - 1; i != -1; i--) {
-				push(new Double((int) classname[i]));
+				push(new BigDecimal((int) classname[i]));
 			}
 			break;
 
 		case "objects":
-			objects.add((Double[]) stac.get(currstac).toArray());
+			objects.add((BigDecimal[]) stac.get(currstac).toArray());
 			move();
 			int k = objectrefsold.indexOf(currin()[position].trim());
 			if (k != -1) {
@@ -721,49 +718,49 @@ public class Vitsy {
 			break;
 
 		case "numstack":
-			push((double) stac.size());
+			push(new BigDecimal(stac.size()));
 			break;
 
 		case "add":
-			setind(2, top() + (index(2)));
+			setind(2, top().add(index(2)));
 			rmtop();
 			break;
 
 		case "subtract":
-			setind(2, index(2) - (top()));
+			setind(2, index(2).subtract(top()));
 			rmtop();
 			break;
 
 		case "multiply":
-			setind(2, top() * (index(2)));
+			setind(2, top().multiply(index(2)));
 			rmtop();
 			break;
 
 		case "divide":
-			setind(2, index(2) / (top()));
+			setind(2, index(2).divide(top()));
 			rmtop();
 			break;
 
 		case "equal":
-			setind(2, (double) ((index(2).doubleValue() == top().doubleValue()) ? 1 : 0));
+			setind(2, new BigDecimal((index(2).compareTo(top()) == 0) ? 1 : 0));
 			rmtop();
 			break;
 
 		case "modulo":
-			setind(2, index(2) % top());
+			setind(2, index(2).remainder(top()));
 			rmtop();
 			break;
 
 		case "power":
-			setind(2, Math.pow(index(2), top()));
+			setind(2, new BigDecimal(Math.pow(index(2).doubleValue(), top().doubleValue())));
 			rmtop();
 			break;
 
 		case "factorial":
-			double output = 1;
-			Double y = top();
-			for (int i = 1; i <= y; i++) {
-				output *= i;
+			BigDecimal output = new BigDecimal(1);
+			BigDecimal y = top();
+			for (BigDecimal i = new BigDecimal(1); i.compareTo(y) == -1; i.add(new BigDecimal(1))) {
+				output = i.multiply(output);
 			}
 			settop(output);
 			break;
@@ -774,7 +771,9 @@ public class Vitsy {
 				loopmove();
 				if (currin()[position].trim().equals(quotetype) || currin()[position].trim().equals(quotetype))
 					break;
-				push(((double) ((String) ((operationType instanceof VerboseHandler)?Converter.toGolfed(currin, position, currin()[position]):currin()[position])).toCharArray()[0]));
+				push(new BigDecimal((double) ((String) ((operationType instanceof VerboseHandler)
+						? Converter.toGolfed(currin, position, currin()[position]) : currin()[position]))
+								.toCharArray()[0]));
 			}
 			break;
 
@@ -791,45 +790,45 @@ public class Vitsy {
 			rmtop();
 			int g = 0;
 			for (g = ind2; g != ind1; g += (ind2 > ind1) ? -1 : 1)
-				push(new Double(g));
-			push(new Double(g));
+				push(new BigDecimal(g));
+			push(new BigDecimal(g));
 			break;
 
 		case "factorize":
 			int f = top().intValue();
 			rmtop();
 			if (f < 0)
-				push(new Double(-1));
+				push(new BigDecimal(-1));
 			f = Math.abs(f);
 			for (int i = 2; i <= f; i++) {
 				while (f % i == 0) {
-					push(new Double(i));
+					push(new BigDecimal(i));
 					f /= i;
 				}
 			}
 			break;
 
 		case "prime":
-			Double n = top();
+			Double n = top().doubleValue();
 			rmtop();
 			if (n < 2) {
-				push(new Double(0));
+				push(new BigDecimal(0));
 				break;
 			} else if (n == 2 || n == 3) {
-				push(new Double(1));
+				push(new BigDecimal(1));
 				break;
 			} else if (n % 2 == 0 || n % 3 == 0) {
-				push(new Double(0));
+				push(new BigDecimal(0));
 				break;
 			}
 			long sqrtN = (long) Math.sqrt(n) + 1;
 			for (long i = 6L; i <= sqrtN; i += 6) {
 				if (n % (i - 1) == 0 || n % (i + 1) == 0) {
-					push(new Double(1));
+					push(new BigDecimal(1));
 					break;
 				}
 			}
-			push(new Double(1));
+			push(new BigDecimal(1));
 			break;
 
 		case "changedir":
@@ -851,13 +850,13 @@ public class Vitsy {
 		case "nothing":
 			int i = objectrefs.indexOf(currin()[position]);
 			if (i != -1) {
-				stac.add((ArrayList<Double>) (Arrays.asList(objects.get(i))));
+				stac.add((ArrayList<BigDecimal>) (Arrays.asList(objects.get(i))));
 				changeStack(true);
 				objects.remove(i);
 				objectrefsold.add(objectrefs.get(i));
 				objectrefs.remove(i);
 			} else if ((i = objectrefsold.indexOf(currin()[position])) != -1) {
-				objects.add((Double[]) stac.get(currstac).toArray());
+				objects.add((BigDecimal[]) stac.get(currstac).toArray());
 				objectrefs.add(objectrefsold.get(i));
 				objectrefsold.remove(i);
 				stac.remove(currstac);
@@ -869,12 +868,12 @@ public class Vitsy {
 			}
 		}
 	}
-	
+
 	public int getCurrin() {
 		return currstac;
 	}
-	
-	private Double top() {
+
+	private BigDecimal top() {
 		return index(1);
 	}
 
@@ -883,15 +882,15 @@ public class Vitsy {
 			currstac = (chngDir) ? (currstac + 1) % stac.size() : (currstac - 1 >= 0) ? currstac - 1 : stac.size() - 1;
 	}
 
-	private Double index(int i) {
+	private BigDecimal index(int i) {
 		return stac.get(currstac).get(stac.get(currstac).size() - i);
 	}
 
-	private void settop(Double x) {
+	private void settop(BigDecimal x) {
 		setind(1, x);
 	}
 
-	private void setind(int i, Double x) {
+	private void setind(int i, BigDecimal x) {
 		stac.get(currstac).set(stac.get(currstac).size() - i, x);
 	}
 
@@ -912,7 +911,7 @@ public class Vitsy {
 		stac.get(currstac).remove(stac.get(currstac).size() - 1);
 	}
 
-	private void push(Double x) {
+	private void push(BigDecimal x) {
 		stac.get(currstac).add(x);
 	}
 
@@ -933,9 +932,9 @@ public class Vitsy {
 			}
 		}
 		info += "\nStack:";
-		for (ArrayList<Double> i : stac) {
+		for (ArrayList<BigDecimal> i : stac) {
 			info += "\n";
-			for (Double k : i) {
+			for (BigDecimal k : i) {
 				info += k + " ";
 			}
 		}
