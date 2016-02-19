@@ -735,7 +735,11 @@ public class Vitsy {
 			break;
 
 		case "divide":
-			setind(2, index(2).divide(top(), 20, BigDecimal.ROUND_HALF_DOWN));
+			try {
+				setind(2, index(2).divide(top()));
+			} catch (ArithmeticException e) {
+				setind(2, index(2).divide(top(), 20, BigDecimal.ROUND_HALF_DOWN));
+			}
 			rmtop();
 			break;
 
