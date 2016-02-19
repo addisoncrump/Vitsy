@@ -53,8 +53,8 @@ Note that these can extend to the StackOverflow limit.
  - loop: [
     - begin a loop.
  - end loop: ]
-    - End a loop only if the top item of the stack is zero. If this is called ouside of a loop it is treated as a NOP.
-    - If the top item of the stack is not zero, return to the beginning of the loop.
+    - End a loop only if the top item of the stack is zero (and pop the zero). If this is called ouside of a loop it is treated as a NOP.
+    - If the top item of the stack is not zero, return to the beginning of the loop (but do not pop the top value).
  - sine: S
     - Use the top value of the stack as input for a sine function, replacing said top value (in radians).
  - asine: s
