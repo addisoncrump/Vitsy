@@ -759,7 +759,7 @@ public class Vitsy {
 		case "factorial":
 			BigDecimal output = new BigDecimal(1);
 			BigDecimal y = top();
-			for (BigDecimal i = new BigDecimal(1); i.compareTo(y) == -1; i.add(new BigDecimal(1))) {
+			for (BigDecimal i = new BigDecimal(1); i.compareTo(y) == -1; i=i.add(new BigDecimal(1))) {
 				output = i.multiply(output);
 			}
 			settop(output);
