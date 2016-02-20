@@ -12,8 +12,8 @@ Vitsy comes from a common shortening for my alias, VTC, pronounced as a word.
 This jar file exists for servers with online interpreters. It is the 'safe mode' jar.
 
 ### Command Line Usage
-You can either write a program to a file and run it from said file with "java -jar Vitsy.jar [--verbose] <filename> [arg 1] [arg 2] ..." or directly from the command line with "java -jar Vitsy.jar [--verbose] --code '<program>' [arg 1] [arg 2] ..."'
-You can force values to be parsed as string input with "java -jar Vitsy.jar [--verbose] <filename | --code '<program>'> -v [num 1] [num 2] ..."
+You can either write a program to a file and run it from said file with `java -jar Vitsy.jar [--verbose] <filename> [arg 1] [arg 2] ...` or directly from the command line with `java -jar Vitsy.jar [--verbose] --code '<program>' [arg 1] [arg 2] ...`.
+You can force values to be parsed as string input with `java -jar Vitsy.jar [--verbose] <filename | --code '<program>'> -v [num 1] [num 2] ...`.
 Note that an empty program will print out the lyrics to 99 bottles of beer. c:
 
 ### Wrap Nature
@@ -23,174 +23,174 @@ A program will only loop given that
 - The program is currently in any type of recursion (including if statements).
 - The program is capturing a string.
 
-### ;e and ;u
-- When you declare ;e, the text following ;ext (with a space afterward) will be declared this class's superclass. This is important for use of the "K" command.
-- When you declare ;u, the text following ;use (with a space afterward) will be declared as used by this class. This is important for use of the "k" command.
+### `;e` and `;u`
+- When you declare `;e`, the text following `;ext` (with a space afterward) will be declared this class's superclass. This is important for use of the `K` command.
+- When you declare `;u`, the text following `;use` (with a space afterward) will be declared as used by this class. This is important for use of the `k` command.
 - Disabled in Safe mode.
 
 Note that these can extend to the StackOverflow limit.
 
 ### Verbose Mode
-- Verbose Mode is enabled through the command line with the "--verbose" flag.
+- Verbose Mode is enabled through the command line with the `--verbose` flag.
 - Basic Syntax:
    - Separate every command with a semicolon.
    - Separate every method index with a colon. (as you would separate every method in the golfed mode with a newline)
    - For details on individual commands, please see Converter.java
 
 ### Basic Syntax
- - input: i
+ - input: `i`
     - push the top item of the input stack as an integer to the program stack
- - input length: I
+ - input length: `I`
     - push the length of the input stack to the top of the program stack
- - wait: w
+ - wait: `w`
     - wait the top item of stack in seconds.
- - ifnot: )
+ - ifnot: `)`
     - if the top item of the stack, post integer truncation, is not zero, do the next operation. Otherwise, skip it.
-    - If an ifnot statement is found before a [, it will execute all information in [] if and only if the top item is not zero. 
- - if: (
+    - If an ifnot statement is found before a `[`, it will execute all information in `[...]` if and only if the top item is not zero. 
+ - if: `(`
     - if the top item of the stack, post integer truncation, is equal to zero, do the next operation. Otherwise, skip it.
-    - If an if statement is found before a [, it will execute all information in [] if and only if the top item is zero. 
- - loop: [
+    - If an if statement is found before a `[`, it will execute all information in `[...]` if and only if the top item is zero. 
+ - loop: `[`
     - begin a loop.
- - end loop: ]
+ - end loop: `]`
     - End a loop only if the top item of the stack is zero (and pop the zero). If this is called ouside of a loop it is treated as a NOP.
     - If the top item of the stack is not zero, return to the beginning of the loop (but do not pop the top value).
- - sine: S
+ - sine: `S`
     - Use the top value of the stack as input for a sine function, replacing said top value (in radians).
- - asine: s
+ - asine: `s`
     - Use the top value of the stack as input for an asine function, replacing said top value (in radians).
- - cosine: C
+ - cosine: `C`
     - Use the top value of the stack as input for a cosine function, replacing said top value (in radians).
- - acosine: A
+ - acosine: `A`
     - Use the top value of the stack as input for an acosine function, replacing said top value (in radians).
- - tangent: T
+ - tangent: `T`
     - Use the top value of the stack as input for a tangent function, replacing said top value (in radians).
- - atangent: t
+ - atangent: `t`
     - Use the top value of the stack as input for an atangent function, replacing said top value (in radians).
- - pi: P
+ - pi: `P`
     - Push a decimal approximation of pi to the top of the stack.
- - e: E
+ - e: `E`
     - Push a decimal approximation of e to the top of the stack.
- - log: L
+ - log: `L`
     - Take the log of the second-to-top item of the stack with a base of the top item of the stack.
- - outnum: N
+ - outnum: `N`
     - Output the top number of the stack as a float.
- - outchar: O
+ - outchar: `O`
     - Output the top number of the stack as a character (truncated first) with ISO-8859-1 encoding.
- - rand: R
+ - rand: `R`
     - Get a random number between 0 and the top item of the stack.
- - end: ;
+ - end: `;`
     - End execution of the current method or break out of a current while loop.
- - printall: Z
-    - Print out the entire current stack as characters. Equivalent to 'l\O'
- - getall: z
-    - Get all the input of the input stack and push it to the stack. Equivalent to 'I\i'
- - prompt: W
+ - printall: `Z`
+    - Print out the entire current stack as characters. Equivalent to `l\O`.
+ - getall: `z`
+    - Get all the input of the input stack and push it to the stack. Equivalent to `I\i`.
+ - prompt: `W`
     - Get a line of STDIN. If there is no line input into the program, pause the program until another input line is input.
- - teleport: #
+ - teleport: `#`
     - Teleport to the 1-D coordinates of the top item of the stack.
- - length: l
+ - length: `l`
     - Get the length of the stack and push it to the top of the stack.
- - repeatnextchar: \\
+ - repeatnextchar: `\`
     - Repeat the next operation as many times as the truncated top item of the stack.
- - for loop: \\[ (relative to direction, if moving leftward, use [\)
-    - Repeat the operations encapsulated in the [] for the number of times specified by the top value of the stack.
- - reverse: r
+ - for loop: `\[` (relative to direction, if moving leftward, use `[\`)
+    - Repeat the operations encapsulated in the `[...]` for the number of times specified by the top value of the stack.
+ - reverse: `r`
     - Reverse the stack.
- - singswitch: $
+ - singswitch: `$`
     - Switch the top two items of the stack.
- - multiswitch: %
+ - multiswitch: `%`
     - Rotate the top top items of the stack.
- - rotateright: }
+ - rotateright: `}`
     - Take the bottom item of the stack to the top.
- - rotateleft: {
+ - rotateleft: `{`
     - Take the top item of the stack to the bottom.
- - duplicate: D
+ - duplicate: `D`
     - Duplicate the top item of the stack.
- - part: @
+ - part: `@`
     - Get the top value of the stack's integer value and get its value's index, replacing the top value of the stack with said index.
- - rightstack: ?
+ - rightstack: `?`
     - Shift one stack to the right - note that this will wrap around, so the 2-dimensionality of the stacks are... finicky.
- - leftstack: |
+ - leftstack: `|`
     - Shift one stack to the left. This will also wrap around.
- - clnstack: :
+ - clnstack: `:`
     - Clone the current stack, creating a new one and pushing all of the contents of the current stack to it. You will shift to this stack after this operation.
- - newstack: &
+ - newstack: `&`
     - Create an empty stack.
- - rmstack: Y
+ - rmstack: `Y`
     - Remove the current stack. This will shift you one stack to the right (if it exists).
- - numstack: y
+ - numstack: `y`
     - Get the current number of stacks.
- - flatten: u
+ - flatten: `u`
     - Push the contents of the top stack to the previous stack, removing the top stack in the process.
     - Note that if there is only one stack, it push the contents of itself to itself, then remove itself, acting like rmstack.
- - tempvar: v
+ - tempvar: `v`
     - If there is no value in tempvar, set the top item of the stack to it. Otherwise, push the tempvar value to the stack and clear the value of tempvar.
- - globalvar: V
+ - globalvar: `V`
     - If there is no value in globalvar, set the top item of the stack to it. Otherwise, push the globalvar value to the stack.
- - remove: X
+ - remove: `X`
     - Remove the top item of the current stack.
- - add: +
+ - add: `+`
     - Add the top two items of the stack.
- - subtract: -
+ - subtract: `-`
     - Subtract the top item of the stack by the second-to-top item of the stack.
- - multiply: *
+ - multiply: `*`
     - Multiply the top two items of the stack.
- - divide: /
+ - divide: `/`
     - Divide the top item of the stack by the second-to-top item of the stack.
- - equal: =
+ - equal: `=`
     - If the top two items of the stack are equal, chop off the top item of the stack and replace it with a zero.
     - If they are not equal, chop off the top item of the stack and replace it with a 1.
- - modulo: M
+ - modulo: `M`
     - Modulo the top item of the stack by the second-to-top item of the stack.
- - factorize: h
+ - factorize: `h`
     - Push the prime factors of top item of the stack to the stack.
- - range: H
+ - range: `H`
     - Push the range from the second-to-top item to the top item of the stack to the stack.
- - power: ^
+ - power: `^`
     - Put the second-to-top item of the stack to the power of the top item of the stack.
- - prime: p
+ - prime: `p`
     - If the top item of the stack is prime, push 1. Otherwise, push 0.
- - method: m
+ - method: `m`
     - Go to the line in the source code file as defined by the truncated top item of the stack.
- - object: o
+ - object: `o`
     - Push the current stack to an object referenced by the following character and remove it from the program stack. This will not override commands.
     - Once the aforementioned character is in the instruction pointer again, it will push the object's stack to the program stack.
     - Any character that is instantiated will draw the program's stack again if it has no object stack.
- - classmethod: k
-    - Pop the top two items of the stack. Using the second-to-top item, get the index of the ';u' declaration and load that class. Then execute the top item line of code.
+ - classmethod: `k`
+    - Pop the top two items of the stack. Using the second-to-top item, get the index of the `;u` declaration and load that class. Then execute the top item line of code.
     - If the second to top item is -1, it will execute the specified line of code in the current program.
     - If the second to top item is -2, it will execute the specified line of code in the superclass.
     - Disabled in Safe mode.
- - super: K
-    - Do the current line of code of the superclass (as defined in the ';e' declaration).
+ - super: `K`
+    - Do the current line of code of the superclass (as defined in the `;e` declaration).
     - Disabled in Safe mode.
- - usecount: g
+ - usecount: `g`
     - Count the amount of use declarations that are valid and push it to the stack.
     - Disabled in Safe mode.
- - classname: G
+ - classname: `G`
     - Get the name of the class as indexed by the top item of the stack.
     - If the reference index is -1, it will return the name of the current class.
     - If the reference index is -2, it will return the name of the superclass.
     - Disabled in Safe mode.
- - file: \`
+ - file: <code>\`</code>
     - Pop the entire current stack as a string and open the file with that string name, pushing its contents to the stack.
     - Disabled in Safe mode.
- - write: .
+ - write: `.`
     - Pop the current stack and use that as a file name, then pop stack to the right and use that as contents of the file.
     - Disabled in Safe mode.
- - shell: ,
+ - shell: `,`
     - Pop the current stack and use that as a command for use in the system terminal, then push the results of that terminal process to the current stack.
     - Disabled in Safe mode.
  - eval:
     - Pop the current stack and evaluate the string equation, pushing the result to the current stack. If unevaluable, it will push NaN.
- - go left: <
+ - go left: `<`
     - Turn the instruction pointer to the left.
- - go right: >
+ - go right: `>`
     - Turn the instruction pointer to the right.
  - nothing:  
     - Anything undefined is a NOP.
- - quote: " or '
+ - quote: `"` or `'`
     - Double or single quotes begin to parse code as a string until encountering another quote.
 
 ### Future Updates
