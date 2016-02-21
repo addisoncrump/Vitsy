@@ -440,7 +440,6 @@ public class Vitsy {
 			if (top().toBigInteger().compareTo(new BigDecimal(0).toBigInteger()) == 0 && currin()[(direction)
 					? (position + 1) % currin().length : (position - 1 >= 0) ? position - 1 : currin().length - 1]
 							.equals((operationType instanceof GolfHandler) ? "[" : "begin recursive area")) {
-				System.out.println("1;");
 				rmtop();
 				loopmove();
 				loopmove();
