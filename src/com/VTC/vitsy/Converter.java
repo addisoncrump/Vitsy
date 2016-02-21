@@ -90,7 +90,7 @@ public class Converter {
 		case "$":
 			return "switch the top two items";
 		case "%":
-			return "rotate the top top items";
+			return "pop n, rotate the top n items";
 		case "}":
 			return "rotate stack right";
 		case "{":
@@ -266,7 +266,7 @@ public class Converter {
 			return "r";
 		case "switch the top two items":
 			return "$";
-		case "rotate the top top items":
+		case "pop n, rotate the top n items":
 			return "%";
 		case "rotate stack right":
 			return "}";
