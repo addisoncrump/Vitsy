@@ -344,14 +344,16 @@ public class Converter {
 			return "<";
 		case "go forward":
 			return ">";
+		case "end recursive area":
+			return "]";
 		case "toggle single quote":
 			return "\'";
 		case "toggle double quote":
 			return "\"";
 		}
-		if (operator.length() > 1) 
+		if (operator.length() > 1)
 			throw new UnrecognizedInstructionException(
-					"Warning: unrecognized operator: " + operator + " (command #" + currin + ","+ position + ")");
+					"Warning: unrecognized operator: " + operator + " (command #" + currin + "," + position + ")");
 		return operator;
 	}
 }

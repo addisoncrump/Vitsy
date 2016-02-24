@@ -62,26 +62,36 @@ public class Vitsy {
 
 	private FileHandler fileType = new GolfFileHandler();
 
-	private boolean codeOnly = false;
+	public final boolean CODE_ONLY;
+	
+	public final boolean VERBOSE;
 
 	public static void main(String[] arg)
 			throws InterruptedException, IOException, ScriptException, UnrecognizedInstructionException {
 		ArrayList<String> args = new ArrayList(Arrays.asList(arg));
-		Vitsy mainVitsy = new Vitsy(args.remove("--verbose"));
-		mainVitsy.codeOnly = args.remove("--code");
+		Vitsy mainVitsy = new Vitsy(args.remove("--verbose"), args.remove("--code"));
+		if (args.remove("--convert")) {
+			if (!mainVitsy.VERBOSE)
+				FullConversion.fullConvertGolfed(args.get(0));
+			else
+				FullConversion.fullConvertGolfed(args.get(0));
+			return;
+		}
 		if (args.size() == 0) {
 			errorExit();
 		}
 		mainVitsy.run(args);
 	}
 
-	public Vitsy(boolean verbose) {
+	public Vitsy(boolean verbose, boolean codeOnly) {
 		stac.add(new ArrayList(0));
 		looping.add(false);
 		if (verbose) {
 			fileType = new VerboseFileHandler();
 			operationType = new VerboseHandler();
 		}
+		CODE_ONLY = codeOnly;
+		VERBOSE = verbose;
 	}
 
 	public void run(ArrayList<String> args)
@@ -108,7 +118,7 @@ public class Vitsy {
 				}
 			}
 		}
-		if (!codeOnly) {
+		if (!CODE_ONLY) {
 			try {
 				extender.add(fileType.getFileInstruct(args, false, new boolean[] { false, true }).get(0)[0]);
 				users.add(fileType.getFileInstruct(args, false, new boolean[] { true, false }).get(0));
@@ -116,7 +126,7 @@ public class Vitsy {
 			}
 			currclassname.add(args.get(0));
 		}
-		instruct.add((ArrayList<String[]>) fileType.getFileInstruct(args, codeOnly, new boolean[] { false, false }));
+		instruct.add((ArrayList<String[]>) fileType.getFileInstruct(args, CODE_ONLY, new boolean[] { false, false }));
 		while (!ending) {
 			if (!looping.get(looping.size() - 1) && position > currin().length - 1 && oldpos.size() == 0)
 				System.exit(0);
@@ -425,14 +435,14 @@ public class Vitsy {
 				toEvaluate += new String(new char[] { (char) (stac.get(currstac).get(i).intValue()) });
 			stac.set(currstac, new ArrayList(0));
 			Object evaluated = jsengine.eval(toEvaluate);
-			if (evaluated instanceof Double)
-				push(new BigDecimal((Double) evaluated));
-			else if (evaluated instanceof Integer)
-				push(new BigDecimal(((Integer) evaluated)));
-			else if (evaluated instanceof String) {
-				char[] output = ((String) evaluated).toCharArray();
-				for (int i = output.length - 1; i >= 0; i--)
-					push(new BigDecimal((int) output[i]));
+			try {
+				push(new BigDecimal(Double.parseDouble(evaluated.toString())));
+			} catch (Exception e) {
+				try {
+					char[] output = evaluated.toString().toCharArray();
+					for (int i = output.length - 1; i >= 0; i--)
+						push(new BigDecimal((int) output[i]));
+				} catch (Exception i) {}
 			}
 			break;
 
@@ -770,7 +780,7 @@ public class Vitsy {
 		case "factorial":
 			BigDecimal output = new BigDecimal(1);
 			BigDecimal y = top();
-			for (BigDecimal i = new BigDecimal(1); i.compareTo(y) == -1; i = i.add(new BigDecimal(1))) {
+			for (BigDecimal i = new BigDecimal(1); i.compareTo(y) != 1; i = i.add(new BigDecimal(1))) {
 				output = i.multiply(output);
 			}
 			settop(output);
