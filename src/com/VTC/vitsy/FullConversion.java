@@ -17,7 +17,7 @@ public class FullConversion {
 				sb.append(":");
 				line = br.readLine();
 			}
-			System.out.println(sb.toString().substring(0, sb.toString().indexOf(":")));
+			System.out.println(sb.toString().substring(0, sb.toString().lastIndexOf(":")));
 		} finally {
 			br.close();
 		}

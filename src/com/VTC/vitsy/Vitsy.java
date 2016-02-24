@@ -71,10 +71,10 @@ public class Vitsy {
 		ArrayList<String> args = new ArrayList(Arrays.asList(arg));
 		Vitsy mainVitsy = new Vitsy(args.remove("--verbose"), args.remove("--code"));
 		if (args.remove("--convert")) {
-			if (!mainVitsy.VERBOSE)
+			if (mainVitsy.VERBOSE)
 				FullConversion.fullConvertGolfed(args.get(0));
 			else
-				FullConversion.fullConvertGolfed(args.get(0));
+				FullConversion.fullConvertVerbose(args.get(0));
 			return;
 		}
 		if (args.size() == 0) {

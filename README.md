@@ -17,7 +17,7 @@ You can force values to be parsed as string input with `java -jar Vitsy.jar [--v
 Note that an empty program will print out the lyrics to 99 bottles of beer. c:
 
 ### Conversion
-To convert a Vitsy program to/from verbose, add "--convert" to the command line arguments. Using "--verbose" will convert a golfed program to verbose, but the default (no extra flags) is the verbose to golfed.
+To convert a Vitsy program to/from verbose, add "--convert" to the command line arguments. Using "--verbose" will convert a verbose program to golfed, but the default (no extra flags) is the golfed to verbose.
 
 ### Wrap Nature
 A program will only loop given that
