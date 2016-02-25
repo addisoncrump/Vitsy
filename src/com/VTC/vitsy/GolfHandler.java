@@ -131,6 +131,8 @@ public class GolfHandler implements Operable {
 			return "equal";
 		case "M":
 			return "modulo";
+		case "_":
+			return "int";
 		case "h":
 			return "factorize";
 		case "H":

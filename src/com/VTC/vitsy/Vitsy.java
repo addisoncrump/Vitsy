@@ -777,6 +777,10 @@ public class Vitsy {
 			setind(2, index(2).remainder(top()));
 			rmtop();
 			break;
+			
+		case "int":
+			settop(new BigDecimal(top().toBigInteger()));
+			break;
 
 		case "power":
 			setind(2, new BigDecimal(Math.pow(index(2).doubleValue(), top().doubleValue())));

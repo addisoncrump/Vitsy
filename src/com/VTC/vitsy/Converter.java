@@ -131,6 +131,8 @@ public class Converter {
 			return "push whether top two are equal";
 		case "M":
 			return "modulo top two";
+		case "_":
+			return "replace top with int(top)";
 		case "h":
 			return "factorize top item";
 		case "H":
@@ -308,6 +310,8 @@ public class Converter {
 			return "=";
 		case "modulo top two":
 			return "M";
+		case "replace top with int(top)":
+			return "_";
 		case "factorize top item":
 			return "h";
 		case "push all ints between second to top and top":

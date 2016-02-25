@@ -146,6 +146,8 @@ Note that these can extend to the StackOverflow limit.
     - If they are not equal, chop off the top item of the stack and replace it with a 1.
  - modulo: `M`
     - Modulo the top item of the stack by the second-to-top item of the stack.
+ - int: `_`
+    - Set the top item of the stack to the top item with the fractional portion removed.
  - factorize: `h`
     - Push the prime factors of top item of the stack to the stack.
  - range: `H`
