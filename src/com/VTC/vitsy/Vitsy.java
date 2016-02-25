@@ -80,7 +80,11 @@ public class Vitsy {
 		if (args.size() == 0) {
 			errorExit();
 		}
-		mainVitsy.run(args);
+		try {
+			mainVitsy.run(args);
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + " thrown in "+mainVitsy.currclassname.get(mainVitsy.currclassname.size()-1)+" at command #" + mainVitsy.currin + "," + mainVitsy.position);
+		}
 	}
 
 	public Vitsy(boolean verbose, boolean codeOnly) {
@@ -125,6 +129,8 @@ public class Vitsy {
 			} catch (Exception e) {
 			}
 			currclassname.add(args.get(0));
+		} else {
+			currclassname.add("[command line]");
 		}
 		instruct.add((ArrayList<String[]>) fileType.getFileInstruct(args, CODE_ONLY, new boolean[] { false, false }));
 		while (!ending) {
