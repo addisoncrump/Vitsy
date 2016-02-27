@@ -157,6 +157,8 @@ public class GolfHandler implements Operable {
 			return "classname";
 		case "`":
 			return "file";
+		case "x":
+			return "exitnow";
 		case ".":
 			return "write";
 		case ",":

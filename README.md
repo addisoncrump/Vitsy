@@ -40,6 +40,10 @@ Note that these can extend to the StackOverflow limit.
    - Separate every method index with a colon. (as you would separate every method in the golfed mode with a newline)
    - For details on individual commands, please see Converter.java
 
+### Invalid Indexing
+- Anything that is detected as causing a possible IndexOutOfBoundsException (or a subexception thereof) will be caught, with multiple filler 0s being pushed to the stack to compensate, then the operation continues.
+   - An example of this is calling `-` on an empty stack: it will first detect that there is nothing to subtract from, and then push a zero, then detect that there is nothing subtracting, which pushes another 0, then carries out the subtraction, leaving 0 on the stack.
+
 ### Basic Syntax
  - input: `i`
     - push the top item of the input stack as an integer to the program stack
@@ -187,8 +191,9 @@ Note that these can extend to the StackOverflow limit.
  - shell: `,`
     - Pop the current stack and use that as a command for use in the system terminal, then push the results of that terminal process to the current stack.
     - Disabled in Safe mode.
- - eval:
+ - eval: `n`
     - Pop the current stack and evaluate the string equation, pushing the result to the current stack. If unevaluable, it will push NaN.
+ - exitnow: `x`
  - go left: `<`
     - Turn the instruction pointer to the left.
  - go right: `>`

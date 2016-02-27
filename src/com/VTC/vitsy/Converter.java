@@ -163,6 +163,8 @@ public class Converter {
 			return "execute stack as shell";
 		case "n":
 			return "eval(stack)";
+		case "x":
+			return "exit now with top status";
 		case "<":
 			return "go backward";
 		case ">":
@@ -342,8 +344,8 @@ public class Converter {
 			return ",";
 		case "eval(stack)":
 			return "n";
-		case "reverse direction":
-			return "|";
+		case "exit now with top status":
+			return "x";
 		case "go backward":
 			return "<";
 		case "go forward":

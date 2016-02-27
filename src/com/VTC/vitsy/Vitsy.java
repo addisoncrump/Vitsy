@@ -63,7 +63,7 @@ public class Vitsy {
 	private FileHandler fileType = new GolfFileHandler();
 
 	public final boolean CODE_ONLY;
-	
+
 	public final boolean VERBOSE;
 
 	public static void main(String[] arg)
@@ -82,8 +82,10 @@ public class Vitsy {
 		}
 		try {
 			mainVitsy.run(args);
-		} catch (Exception e) {
-			System.err.println(e.getClass().getName() + " thrown in "+mainVitsy.currclassname.get(mainVitsy.currclassname.size()-1)+" at command #" + mainVitsy.currin + "," + mainVitsy.position);
+		} catch (Throwable e) {
+			System.err.println(e.getClass().getName() + " thrown in "
+					+ mainVitsy.currclassname.get(mainVitsy.currclassname.size() - 1) + " at command #"
+					+ mainVitsy.currin + "," + mainVitsy.position + ": "+(String) mainVitsy.currin()[mainVitsy.position].trim());
 		}
 	}
 
@@ -198,14 +200,14 @@ public class Vitsy {
 		instruct.add(fileType.getFileInstruct(
 				new ArrayList(Arrays.asList((new String[] { extender.get(extender.size() - 1) }))), false,
 				new boolean[] { false, false }));
-		users.add(fileType
+		users.add((String[]) fileType
 				.getFileInstruct(new ArrayList(Arrays.asList(new String[] { extender.get(extender.size() - 1) })),
 						false, new boolean[] { true, false })
 				.get(0));
-		extender.add(fileType
+		extender.add(((String[]) fileType
 				.getFileInstruct(new ArrayList(Arrays.asList(new String[] { extender.get(extender.size() - 1) })),
 						false, new boolean[] { false, true })
-				.get(0)[0]);
+				.get(0))[0]);
 		oldposext.add(new Integer[] { currin, position });
 		currclassname.add(extender.get(extender.size() - 2));
 		position = 0;
@@ -215,14 +217,14 @@ public class Vitsy {
 		instruct.add(fileType.getFileInstruct(
 				new ArrayList(Arrays.asList((new String[] { users.get(users.size() - 1)[source] }))), false,
 				new boolean[] { false, false }));
-		users.add(fileType
+		users.add((String[]) fileType
 				.getFileInstruct(new ArrayList(Arrays.asList(new String[] { users.get(users.size() - 1)[source] })),
 						false, new boolean[] { true, false })
 				.get(0));
-		extender.add(fileType
+		extender.add(((String[]) fileType
 				.getFileInstruct(new ArrayList(Arrays.asList(new String[] { users.get(users.size() - 2)[source] })),
 						false, new boolean[] { false, true })
-				.get(0)[0]);
+				.get(0))[0]);
 		oldposext.add(new Integer[] { currin, position });
 		currin = top().intValue();
 		currclassname.add(users.get(users.size() - 2)[source]);
@@ -279,8 +281,7 @@ public class Vitsy {
 
 	public void opHandle() throws InterruptedException, IOException, ScriptException, UnrecognizedInstructionException {
 		boolean makingObject = false;
-		switchout:
-		switch (operationType.doOperation(currin, position, (String) currin()[position].trim())) {
+		switchout: switch (operationType.doOperation(currin, position, (String) currin()[position].trim())) {
 		case "1":
 			push(new BigDecimal(1));
 			break;
@@ -449,7 +450,8 @@ public class Vitsy {
 					char[] output = evaluated.toString().toCharArray();
 					for (int i = output.length - 1; i >= 0; i--)
 						push(new BigDecimal((int) output[i]));
-				} catch (Exception i) {}
+				} catch (Exception i) {
+				}
 			}
 			break;
 
@@ -640,7 +642,7 @@ public class Vitsy {
 			break;
 
 		case "multiswitch":
-			int temp4 = top().toBigInteger().mod(new BigDecimal(stac.get(currstac).size()).toBigInteger()).intValue();
+			int temp4 = top().intValue();
 			rmtop();
 			multiswitch(temp4);
 			break;
@@ -778,7 +780,7 @@ public class Vitsy {
 			setind(2, index(2).remainder(top()));
 			rmtop();
 			break;
-			
+
 		case "int":
 			settop(new BigDecimal(top().toBigInteger()));
 			break;
@@ -878,6 +880,10 @@ public class Vitsy {
 		case "randdir":
 			direction = (Math.random() < .5);
 			break;
+			
+		case "exitnow":
+			System.exit(top().remainder(new BigDecimal(256)).intValue());
+			break;
 
 		case "nothing":
 			int i = objectrefs.indexOf(currin()[position]);
@@ -915,7 +921,12 @@ public class Vitsy {
 	}
 
 	private BigDecimal index(int i) {
-		return stac.get(currstac).get(stac.get(currstac).size() - i);
+		int currsize = stac.get(currstac).size();
+		try {
+			return stac.get(currstac).get(currsize - i);
+		} catch (Exception e) {
+			return new BigDecimal(0);
+		}
 	}
 
 	private void settop(BigDecimal x) {
@@ -923,7 +934,13 @@ public class Vitsy {
 	}
 
 	private void setind(int i, BigDecimal x) {
-		stac.get(currstac).set(stac.get(currstac).size() - i, x);
+		try {
+			stac.get(currstac).set(stac.get(currstac).size() - i, x);
+		} catch (Exception e) {
+			push(new BigDecimal(0));
+			multiswitch(stac.get(currstac).size());
+			setind(i, x);
+		}
 	}
 
 	private String[] currin() {
@@ -940,7 +957,10 @@ public class Vitsy {
 	}
 
 	private void rmtop() {
-		stac.get(currstac).remove(stac.get(currstac).size() - 1);
+		try {
+			stac.get(currstac).remove(stac.get(currstac).size() - 1);
+		} catch (Exception e) {
+		}
 	}
 
 	private void push(BigDecimal x) {
