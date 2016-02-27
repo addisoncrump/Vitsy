@@ -279,6 +279,7 @@ public class Vitsy {
 
 	public void opHandle() throws InterruptedException, IOException, ScriptException, UnrecognizedInstructionException {
 		boolean makingObject = false;
+		switchout:
 		switch (operationType.doOperation(currin, position, (String) currin()[position].trim())) {
 		case "1":
 			push(new BigDecimal(1));
@@ -855,8 +856,8 @@ public class Vitsy {
 			long sqrtN = (long) Math.sqrt(n) + 1;
 			for (long i = 6L; i <= sqrtN; i += 6) {
 				if (n % (i - 1) == 0 || n % (i + 1) == 0) {
-					push(new BigDecimal(1));
-					break;
+					push(new BigDecimal(0));
+					break switchout;
 				}
 			}
 			push(new BigDecimal(1));

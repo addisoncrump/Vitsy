@@ -68,7 +68,7 @@ public class Converter {
 		case "E":
 			return "push e";
 		case "L":
-			return "push ln(top)";
+			return "push log_top(second to top)";
 		case "N":
 			return "output top as number";
 		case "O":
@@ -246,7 +246,7 @@ public class Converter {
 			return "P";
 		case "push e":
 			return "E";
-		case "push ln(top)":
+		case "push log_top(second to top)":
 			return "L";
 		case "output top as number":
 			return "N";
