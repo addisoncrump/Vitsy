@@ -194,6 +194,7 @@ Note that these can extend to the StackOverflow limit.
  - eval: `n`
     - Pop the current stack and evaluate the string equation, pushing the result to the current stack. If unevaluable, it will push NaN.
  - exitnow: `x`
+    - Pop n, exits immediately with n status.
  - go left: `<`
     - Turn the instruction pointer to the left.
  - go right: `>`
