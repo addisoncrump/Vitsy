@@ -3,7 +3,7 @@ Vitsy Programming Language, WIP
 
 ### Basic Info
 Vitsy is a 1-D (forcedly so) stack-based language (WIP) that defines itself with basic stack functions (which I will be adding onto at a later time).
-It executes lengthwise with an instruction pointer.
+It executes lengthwise with an instruction pointer, and popping an empty stack returns 0.
 
 ### Naming
 Vitsy comes from a common shortening for my alias, VTC, pronounced as a word.
