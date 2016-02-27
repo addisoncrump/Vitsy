@@ -198,14 +198,14 @@ public class Vitsy {
 		instruct.add(fileType.getFileInstruct(
 				new ArrayList(Arrays.asList((new String[] { extender.get(extender.size() - 1) }))), false,
 				new boolean[] { false, false }));
-		users.add(fileType
+		users.add((String[]) fileType
 				.getFileInstruct(new ArrayList(Arrays.asList(new String[] { extender.get(extender.size() - 1) })),
 						false, new boolean[] { true, false })
 				.get(0));
-		extender.add(fileType
+		extender.add(((String[]) fileType
 				.getFileInstruct(new ArrayList(Arrays.asList(new String[] { extender.get(extender.size() - 1) })),
 						false, new boolean[] { false, true })
-				.get(0)[0]);
+				.get(0))[0]);
 		oldposext.add(new Integer[] { currin, position });
 		currclassname.add(extender.get(extender.size() - 2));
 		position = 0;
@@ -215,14 +215,14 @@ public class Vitsy {
 		instruct.add(fileType.getFileInstruct(
 				new ArrayList(Arrays.asList((new String[] { users.get(users.size() - 1)[source] }))), false,
 				new boolean[] { false, false }));
-		users.add(fileType
+		users.add((String[]) fileType
 				.getFileInstruct(new ArrayList(Arrays.asList(new String[] { users.get(users.size() - 1)[source] })),
 						false, new boolean[] { true, false })
 				.get(0));
-		extender.add(fileType
+		extender.add(((String[]) fileType
 				.getFileInstruct(new ArrayList(Arrays.asList(new String[] { users.get(users.size() - 2)[source] })),
 						false, new boolean[] { false, true })
-				.get(0)[0]);
+				.get(0))[0]);
 		oldposext.add(new Integer[] { currin, position });
 		currin = top().intValue();
 		currclassname.add(users.get(users.size() - 2)[source]);
@@ -915,7 +915,8 @@ public class Vitsy {
 	}
 
 	private BigDecimal index(int i) {
-		return stac.get(currstac).get(stac.get(currstac).size() - i);
+		int currsize = stac.get(currstac).size();
+		return i > currsize ? new BigDecimal(0) : stac.get(currstac).get(currsize - i);
 	}
 
 	private void settop(BigDecimal x) {
