@@ -674,7 +674,7 @@ public class Vitsy {
 			break;
 
 		case "part":
-			settop(stac.get(currstac).get(top().intValue()));
+			settop(index(top().intValue()));
 			break;
 
 		case "classmethod":
