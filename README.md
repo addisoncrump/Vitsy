@@ -1,6 +1,23 @@
 # Vitsy
 Vitsy Programming Language, WIP
 
+Author: VTCAKAVSMoACE
+
+<a href="http://stackexchange.com/users/6621356">
+<img src="http://stackexchange.com/users/flair/6621356.png" width="208" height="58" alt="profile for CoolestVeto on Stack Exchange, a network of free, community-driven Q&amp;A sites" title="profile for CoolestVeto on Stack Exchange, a network of free, community-driven Q&amp;A sites">
+</a>
+
+Collaborators:
+
+<a href="http://stackexchange.com/users/5141892/c%e1%b4%8f%c9%b4%e1%b4%8f%ca%80-ob%ca%80%c9%aa%e1%b4%87%c9%b4"><img src="http://stackexchange.com/users/flair/5141892.png" width="208" height="58" alt="profile for Cᴏɴᴏʀ O&#39;Bʀɪᴇɴ on Stack Exchange, a network of free, community-driven Q&amp;A sites" title="profile for Cᴏɴᴏʀ O&#39;Bʀɪᴇɴ on Stack Exchange, a network of free, community-driven Q&amp;A sites" /></a>
+
+<a href="http://stackexchange.com/users/3802171/legionmammal978"><img src="http://stackexchange.com/users/flair/3802171.png" width="208" height="58" alt="profile for LegionMammal978 on Stack Exchange, a network of free, community-driven Q&amp;A sites" title="profile for LegionMammal978 on Stack Exchange, a network of free, community-driven Q&amp;A sites" /></a>
+
+<a href="http://stackexchange.com/users/4781699/maltysen"><img src="http://stackexchange.com/users/flair/4781699.png" width="208" height="58" alt="profile for Maltysen on Stack Exchange, a network of free, community-driven Q&amp;A sites" title="profile for Maltysen on Stack Exchange, a network of free, community-driven Q&amp;A sites" /></a>
+
+<a href="http://stackexchange.com/users/7140467/rikerw"><img src="http://stackexchange.com/users/flair/7140467.png" width="208" height="58" alt="profile for RikerW on Stack Exchange, a network of free, community-driven Q&amp;A sites" title="profile for RikerW on Stack Exchange, a network of free, community-driven Q&amp;A sites" /></a>
+
+
 ### Basic Info
 Vitsy is a 1-D (forcedly so) stack-based language (WIP) that defines itself with basic stack functions (which I will be adding onto at a later time).
 It executes lengthwise with an instruction pointer.
