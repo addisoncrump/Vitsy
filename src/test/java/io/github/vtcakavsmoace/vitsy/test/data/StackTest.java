@@ -1,15 +1,20 @@
 package io.github.vtcakavsmoace.vitsy.test.data;
 
 import io.github.vtcakavsmoace.vitsy.data.Stack;
+import io.github.vtcakavsmoace.vitsy.test.util.LoggedTest;
+import io.github.vtcakavsmoace.vitsy.util.Direction;
 
 import static org.junit.Assert.assertEquals;
+import static io.github.vtcakavsmoace.vitsy.util.Direction.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class StackTest {
+public class StackTest extends LoggedTest {
 	final int[] compare = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 	final Stack<Integer> stack = new Stack<Integer>();
+	
+	String description = "";
 
 	@Before
 	public void reset() {
@@ -24,45 +29,71 @@ public class StackTest {
 
 	@Test
 	public void testRotateSingleMember() {
-		System.out.println("Rotate single member:");
-		for (boolean bool : new boolean[] { true, false }) {
-			stack.rotate(bool, 1);
+		description = "Rotate single member.";
+		for (Direction dir : new Direction[]{RIGHT, LEFT}) {
+			stack.rotate(dir, 1);
 			compareStackToArray(compare, 0);
 		}
 	}
 	
 	@Test
-	public void testRotatePartial() {
-		
+	public void testRotatePartialRight() {
+		description = "Rotate partial stack right.";
+		stack.rotate(RIGHT, 3);
+		compareStackToArray(new int[]{0, 1, 2, 3, 4, 5, 6, 9, 7, 8}, 0);
+		stack.rotate(RIGHT, 3);
+		compareStackToArray(new int[]{0, 1, 2, 3, 4, 5, 6, 8, 9, 7}, 0);
+		stack.rotate(RIGHT, 3);
+		compareStackToArray(compare, 0);
+	}
+	
+	@Test
+	public void testRotatePartialLeft() {
+		description = "Rotate partial stack left.";
+		stack.rotate(LEFT, 3);
+		compareStackToArray(new int[]{0, 1, 2, 3, 4, 5, 6, 8, 9, 7}, 0);
+		stack.rotate(LEFT, 3);
+		compareStackToArray(new int[]{0, 1, 2, 3, 4, 5, 6, 9, 7, 8}, 0);
+		stack.rotate(LEFT, 3);
+		compareStackToArray(compare, 0);
 	}
 
 	@Test
-	public void testRotateFull() {
-		System.out.println("Rotate all members:");
+	public void testRotateFullRight() {
+		description = "Rotate all members right.";
 		int offset = 0;
 		for (int i = 0; i < 10; i++) {
-			stack.rotate(false);
-			compareStackToArray(compare, ++offset);
-		}
-		for (int i = 0; i < 10; i++) {
-			stack.rotate(true);
+			stack.rotate(RIGHT);
 			compareStackToArray(compare, --offset);
 		}
 	}
 	
 	@Test
+	public void testRotateFullLeft() {
+		description = "Rotate all members left.";
+		int offset = 0;
+		for (int i = 0; i < 10; i++) {
+			stack.rotate(LEFT);
+			compareStackToArray(compare, ++offset);
+		}
+	}
+	
+	@Test
 	public void testReverse() {
-		System.out.println("Reverse all members.");
+		description = "Reverse all members.";
 		int[] compare = new int[] { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 };
 		stack.reverse();
 		compareStackToArray(compare, 0);
 	}
 
 	private void compareStackToArray(int[] array, int offset) {
-		System.out.println(stack);
 		for (int i = 0; i < stack.size(); i++) {
-			assertEquals(array[(i + offset + array.length) % array.length], stack.elementAt(i).intValue());
+			assertEquals(description, array[(i + offset + array.length) % array.length], stack.elementAt(i).intValue());
 		}
 	}
 
+	@Override
+	public String getTestUnitName() {
+		return "StackTest";
+	}
 }

@@ -1,0 +1,1 @@
+{"testUnit":"StackTest","successCount":6,"tests":6,"results":[{"method":"testRotateFullRight","success":true},{"method":"testRotatePartialRight","success":true},{"method":"testRotateFullLeft","success":true},{"method":"testRotatePartialLeft","success":true},{"method":"testReverse","success":true},{"method":"testRotateSingleMember","success":true}]}
