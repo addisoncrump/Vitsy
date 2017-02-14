@@ -30,6 +30,11 @@ public class StackTest {
 			compareStackToArray(compare, 0);
 		}
 	}
+	
+	@Test
+	public void testRotatePartial() {
+		
+	}
 
 	@Test
 	public void testRotateFull() {

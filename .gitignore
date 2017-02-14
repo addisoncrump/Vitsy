@@ -13,4 +13,5 @@
 
 # Maven
 log/
-target/
+target/*
+!target/surefire-reports
