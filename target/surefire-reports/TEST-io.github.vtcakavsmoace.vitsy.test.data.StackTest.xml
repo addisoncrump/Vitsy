@@ -25,7 +25,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="os.name" value="Mac OS X"/>
-    <property name="classworlds.conf" value="/Users/vtcakavsmoace/Documents/Workspaces/main/.metadata/.plugins/org.eclipse.m2e.launching/launches/m2conf5134009853881345803.tmp"/>
+    <property name="classworlds.conf" value="/Users/vtcakavsmoace/Documents/Workspaces/main/.metadata/.plugins/org.eclipse.m2e.launching/launches/m2conf2492184181430758192.tmp"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
     <property name="java.library.path" value="/Users/vtcakavsmoace/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
@@ -63,8 +63,8 @@
   </properties>
   <testcase name="testRotateFullRight" classname="io.github.vtcakavsmoace.vitsy.test.data.StackTest" time="0.004"/>
   <testcase name="testRotatePartialRight" classname="io.github.vtcakavsmoace.vitsy.test.data.StackTest" time="0"/>
-  <testcase name="testRotateFullLeft" classname="io.github.vtcakavsmoace.vitsy.test.data.StackTest" time="0"/>
-  <testcase name="testRotatePartialLeft" classname="io.github.vtcakavsmoace.vitsy.test.data.StackTest" time="0.001"/>
+  <testcase name="testRotateFullLeft" classname="io.github.vtcakavsmoace.vitsy.test.data.StackTest" time="0.002"/>
+  <testcase name="testRotatePartialLeft" classname="io.github.vtcakavsmoace.vitsy.test.data.StackTest" time="0"/>
   <testcase name="testReverse" classname="io.github.vtcakavsmoace.vitsy.test.data.StackTest" time="0"/>
-  <testcase name="testRotateSingleMember" classname="io.github.vtcakavsmoace.vitsy.test.data.StackTest" time="0.001"/>
+  <testcase name="testRotateSingleMember" classname="io.github.vtcakavsmoace.vitsy.test.data.StackTest" time="0"/>
 </testsuite>
