@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="io.github.vtcakavsmoace.vitsy.test.data.StackTest" time="0.004" tests="6" errors="0" skipped="0" failures="0">
+<testsuite name="io.github.vtcakavsmoace.vitsy.test.data.StackTest" time="0.005" tests="6" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_73.jdk/Contents/Home/jre/lib"/>
@@ -61,10 +61,10 @@
     <property name="ftp.nonProxyHosts" value="local|*.local"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase name="testRotateFullRight" classname="io.github.vtcakavsmoace.vitsy.test.data.StackTest" time="0.003"/>
+  <testcase name="testRotateFullRight" classname="io.github.vtcakavsmoace.vitsy.test.data.StackTest" time="0.005"/>
   <testcase name="testRotatePartialRight" classname="io.github.vtcakavsmoace.vitsy.test.data.StackTest" time="0"/>
   <testcase name="testRotateFullLeft" classname="io.github.vtcakavsmoace.vitsy.test.data.StackTest" time="0"/>
   <testcase name="testRotatePartialLeft" classname="io.github.vtcakavsmoace.vitsy.test.data.StackTest" time="0"/>
-  <testcase name="testReverse" classname="io.github.vtcakavsmoace.vitsy.test.data.StackTest" time="0.001"/>
+  <testcase name="testReverse" classname="io.github.vtcakavsmoace.vitsy.test.data.StackTest" time="0"/>
   <testcase name="testRotateSingleMember" classname="io.github.vtcakavsmoace.vitsy.test.data.StackTest" time="0"/>
 </testsuite>
