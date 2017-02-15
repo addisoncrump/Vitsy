@@ -1,7 +1,6 @@
 package io.github.vtcakavsmoace.vitsy.test.data;
 
 import io.github.vtcakavsmoace.vitsy.data.Stack;
-import io.github.vtcakavsmoace.vitsy.test.util.LoggedTest;
 import io.github.vtcakavsmoace.vitsy.util.Direction;
 
 import static org.junit.Assert.assertEquals;
@@ -10,7 +9,7 @@ import static io.github.vtcakavsmoace.vitsy.util.Direction.*;
 import org.junit.Before;
 import org.junit.Test;
 
-public class StackTest extends LoggedTest {
+public class StackTest {
 	final int[] compare = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 	final Stack<Integer> stack = new Stack<Integer>();
 	
@@ -90,10 +89,5 @@ public class StackTest extends LoggedTest {
 		for (int i = 0; i < stack.size(); i++) {
 			assertEquals(description, array[(i + offset + array.length) % array.length], stack.elementAt(i).intValue());
 		}
-	}
-
-	@Override
-	public String getTestUnitName() {
-		return "StackTest";
 	}
 }

@@ -14,5 +14,4 @@
 # Maven
 log/
 target/*
-!target/tests/
 !target/site/
